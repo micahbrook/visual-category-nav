@@ -47,7 +47,7 @@
 .hn-vcn {
   /* GEL tokens (hn). The site has no GEL custom properties yet, so the block carries the ones it uses. */
   --spacing-2xs: 8px; --spacing-xs: 12px; --spacing-sm: 16px; --spacing-md: 20px; --spacing-lg: 24px; --spacing-xl: 32px;
-  --radius-lg: 4px; --radius-xl: 8px; --border-sm: 1px; --border-md: 2px;
+  --radius-lg: 4px; --border-sm: 1px; --border-md: 2px;
   --color-background-default: #ffffff; --color-background-tint: #f8f8f9;
   --color-text-primary: #373737; --color-text-secondary: #686868; --color-sale: #cb1829; --color-border-secondary: #8d8d8d; --color-border-tertiary: #dde3e6;
   --badge-availability-background-online-only: #ffffff; --badge-availability-label-online-only: #686868;
@@ -88,7 +88,8 @@
 .hn-vcn .hn-vcn__media {
   display: flex; align-items: center; justify-content: center;
   width: 100%; aspect-ratio: 1 / 1; overflow: hidden;
-  background: var(--color-background-tint); border-radius: var(--radius-xl);
+  /* 4px corners (radius-lg), as in Templates 1.0 › Visual Category Navigation 0.1 */
+  background: var(--color-background-tint); border-radius: var(--radius-lg);
 }
 /* Icons sit in a 60px box 26px inside a 112px tile (72 in a 134 circle), as in Visual Category Navigation 0.1: 23.2% scales it on phones */
 .hn-vcn .hn-vcn__media--icon { padding: 23.2%; }
@@ -104,13 +105,11 @@
    100 x 74 image container, centred, its bottom 29.5px above the tile's. Set in % so it scales with the tile (88px on phones).
    Each category supplies one image for the container (a transparent 200 x 148 PNG, the container at 2x); an image of any
    other size is fitted inside it, bottom-aligned, so the row stays consistent. */
-.hn-vcn.hn-vcn--tiles .hn-vcn__media { border-radius: var(--radius-lg); }
 .hn-vcn .hn-vcn__media--product { position: relative; }
 .hn-vcn .hn-vcn__product {
   position: absolute; left: 12.687%; bottom: 22.015%; width: 74.627%; height: 55.224%;
   max-width: none; object-fit: contain; object-position: 50% 100%;
 }
-.hn-vcn.hn-vcn--tiles.hn-vcn--circle .hn-vcn__media { border-radius: 50%; }
 /* Hot Deals is labelled in the GEL sale colour */
 .hn-vcn .hn-vcn__item--sale .hn-vcn__label { color: var(--color-sale); }
 /* Promotions carry GEL Badge/Availability flags on the tile: FEATURED (Online Only style), NEW (Customer Direct style).
@@ -149,7 +148,7 @@
 }
 .hn-vcn .hn-vcn__tile:hover .hn-vcn__label { text-decoration: underline; }
 /* Focus: a 2px ring with 2px of space between it and the tile */
-.hn-vcn .hn-vcn__tile:focus-visible { outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); border-radius: var(--radius-xl); }
+.hn-vcn .hn-vcn__tile:focus-visible { outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); border-radius: var(--radius-lg); }
 /* Arrows: GEL Button/Default Small, Tertiary, icon only, as in the Figma rail (grey fill, no border, drop shadow).
    Desktop only; hidden at either end, like GEL pagination. */
 .hn-vcn .hn-vcn__arrow {
