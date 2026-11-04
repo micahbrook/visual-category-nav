@@ -1,4 +1,4 @@
-# Visual Category Navigation
+# Category Launcher (Visual Category Navigation)
 
 Concept for review for the Harvey Norman homepage category row. Not the live site, and not signed off.
 
