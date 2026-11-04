@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Beds and Flooring Tile Ideas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@600;700;800&family=Lato:wght@400;700&display=swap">
+<style>
+:root {
+  --page: #f3f4f5;
+  --surface: #ffffff;
+  --text: #373737;
+  --text-2: #686868;
+  --text-3: #8d8d8d;
+  --line: #dde3e6;
+  --accent: #005b9c;
+  --accent-soft: #e6f0f7;
+  --on-accent: #ffffff;
+  /* The row is a sample of the Harvey Norman page, which is light in both themes */
+  --canvas: #ffffff;
+  --canvas-text: #373737;
+  --canvas-line: #dde3e6;
+  --tile: #f8f8f9;
+  --canvas-sale: #cb1829;
+  --font-head: "Albert Sans", Lato, Arial, sans-serif;
+  --font-body: Lato, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #14181b; --surface: #1d2226; --text: #eef1f3; --text-2: #a9b2b8; --text-3: #7f8a91;
+    --line: #313a40; --accent: #74b6e6; --accent-soft: #1c3243; --on-accent: #0b1a26; --canvas-line: #313a40;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #14181b; --surface: #1d2226; --text: #eef1f3; --text-2: #a9b2b8; --text-3: #7f8a91;
+  --line: #313a40; --accent: #74b6e6; --accent-soft: #1c3243; --on-accent: #0b1a26; --canvas-line: #313a40;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--text); font: 400 16px/1.5 var(--font-body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 24px; padding-block: 40px 64px; display: grid; gap: 48px; }
+@media (max-width: 600px) { .wrap { padding-inline: 16px; padding-block: 24px 48px; gap: 36px; } }
+h1, h2, h3 { font-family: var(--font-head); color: var(--text); margin: 0; text-wrap: balance; letter-spacing: 0; }
+h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.15; font-weight: 800; }
+h2 { font-size: 24px; line-height: 1.25; font-weight: 800; }
+h3 { font-size: 18px; line-height: 1.3; font-weight: 700; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
+.intro { display: grid; gap: 14px; }
+.lead { font-size: 18px; color: var(--text); }
+.spec { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--text-2); font-size: 14px; }
+.spec b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Full row */
+.rowbox { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; display: grid; gap: 0; overflow: hidden; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 32px; padding: 20px 24px; border-bottom: 1px solid var(--line); align-items: center; }
+@media (max-width: 600px) { .controls { padding: 16px; } }
+.control { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.control legend { float: left; font-size: 14px; font-weight: 700; margin-right: 4px; padding: 0; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { padding: 6px 14px; font-size: 14px; cursor: pointer; color: var(--text-2); border-left: 1px solid var(--line); user-select: none; }
+.seg label:first-of-type { border-left: 0; }
+.seg input:checked + label { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: -4px; }
+.canvas { background: var(--canvas); color: var(--canvas-text); }
+.scroller { overflow-x: auto; padding: 36px 24px 20px; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { .scroller { scroll-behavior: auto; } }
+.row { display: flex; align-items: flex-start; gap: 12px; margin: 0; padding: 0; list-style: none; width: max-content; }
+.t { width: 134px; flex: none; display: grid; gap: 8px; align-content: start; justify-items: center; position: relative; }
+.t img { width: 134px; height: 134px; display: block; border-radius: 4px; background: var(--tile); }
+.t span { font: 400 14px/20px var(--font-body); text-align: center; color: var(--canvas-text); }
+.t span.sale { color: var(--canvas-sale); }
+.t .chip { position: absolute; top: -26px; left: 50%; transform: translateX(-50%); font: 700 11px/1 var(--font-body); letter-spacing: .06em; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; white-space: nowrap; background: #005b9c; color: #fff; }
+.t .chip.now { background: #686868; }
+.rowfoot { max-width: none; padding: 12px 24px 18px; font-size: 13px; color: var(--text-2); border-top: 1px solid var(--line); background: var(--surface); }
+@media (max-width: 600px) { .scroller { padding-inline: 16px; } .rowfoot { padding-inline: 16px; } }
+
+/* Category sections */
+section.cat { display: grid; gap: 20px; }
+.cat-head { display: grid; gap: 8px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 860px) { .cards { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.card.pick { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.strip { background: var(--canvas); padding: 20px; border-bottom: 1px solid var(--canvas-line); }
+.strip ol { display: grid; grid-template-columns: repeat(3, minmax(0, 134px)); justify-content: center; gap: 12px; list-style: none; margin: 0; padding: 0; }
+.strip li { display: grid; gap: 8px; justify-items: center; align-content: start; }
+.strip img { width: 100%; max-width: 134px; height: auto; aspect-ratio: 1; display: block; border-radius: 4px; background: var(--tile); }
+.strip li.side img { opacity: .55; }
+.strip li span { font: 400 14px/20px var(--font-body); text-align: center; color: var(--canvas-text); }
+.strip li.side span { color: #8d8d8d; }
+.body { padding: 18px 20px 20px; display: grid; gap: 10px; align-content: start; }
+.title { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.key { font: 800 13px/1 var(--font-head); color: var(--text-2); letter-spacing: .04em; }
+.badge { font: 700 11px/1 var(--font-body); letter-spacing: .06em; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; background: var(--accent); color: var(--on-accent); }
+.badge.now { background: var(--line); color: var(--text); }
+.why { color: var(--text); font-size: 15px; }
+.uses { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 13px; color: var(--text-2); }
+.uses li { display: flex; gap: 8px; }
+.uses code { font: 400 12px/1.6 ui-monospace, Menlo, monospace; color: var(--text-3); white-space: nowrap; }
+
+.notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 860px) { .notes { grid-template-columns: minmax(0, 1fr); } }
+.note { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: grid; gap: 10px; align-content: start; }
+.note ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: 15px; }
+a { color: var(--accent); }
+</style>
+
+</head>
+<body>
+<main class="wrap">
+  <header class="intro">
+    <div class="eyebrow">Visual Category Navigation · Templates 1.0, node 26522:70792</div>
+    <h1>Image ideas for Beds &amp; Manchester and Carpet, Flooring &amp; Rugs</h1>
+    <p class="lead"><strong>Decision, 4 November: the current tiles were chosen for both.</strong> Lawrence asked for suggestions for these two tiles. Here are three for each, built to the same rules as the rest of his row, and shown in the real row so you can judge them next to their neighbours.</p>
+    <div class="spec" aria-label="Tile rules measured from the Figma row">
+      <span>Tile <b>134 × 134</b> on <b>#F8F8F9</b></span>
+      <span>Products in a <b>100 × 74</b> box</span>
+      <span>Bottom-aligned <b>29.5px</b> above the tile edge</span>
+      <span><b>4px</b> between products</span>
+    </div>
+  </header>
+
+  <div class="rowbox">
+    <div class="controls">
+      <fieldset class="control">
+        <legend>Beds &amp; Manchester</legend>
+        <div class="seg" role="radiogroup">
+          <input type="radio" name="beds" id="beds-now" value="now" checked><label for="beds-now">Now</label>
+          <input type="radio" name="beds" id="beds-a" value="beds-a"><label for="beds-a">A</label>
+          <input type="radio" name="beds" id="beds-b" value="beds-b"><label for="beds-b">B</label>
+          <input type="radio" name="beds" id="beds-c" value="beds-d"><label for="beds-c">C</label>
+        </div>
+      </fieldset>
+      <fieldset class="control">
+        <legend>Carpet, Flooring &amp; Rugs</legend>
+        <div class="seg" role="radiogroup">
+          <input type="radio" name="carpet" id="carpet-now" value="now" checked><label for="carpet-now">Now</label>
+          <input type="radio" name="carpet" id="carpet-a" value="carpet-d"><label for="carpet-a">A</label>
+          <input type="radio" name="carpet" id="carpet-b" value="carpet-c"><label for="carpet-b">B</label>
+          <input type="radio" name="carpet" id="carpet-c" value="carpet-b"><label for="carpet-c">C</label>
+        </div>
+      </fieldset>
+    </div>
+    <div class="canvas scroller" id="scroller">
+      <ol class="row" id="row" aria-label="The Evergreen row, in order of traffic"></ol>
+    </div>
+    <p class="rowfoot">The Evergreen row from Figma at 100%, all 19 tiles, ending with Hot Deals. Scroll sideways to see the whole row. Choosing an option scrolls to that tile.</p>
+  </div>
+
+  <section class="cat" aria-labelledby="h-beds">
+    <div class="cat-head">
+      <h2 id="h-beds">Beds &amp; Manchester</h2>
+      <p>The current tile shows beds but not much Manchester: the chest is furniture, and the only linen is what's on the bed. A and B keep Lawrence's bed and change only the second product.</p>
+    </div>
+    <div class="cards">
+      <article class="card pick">
+        <div class="strip"><ol><li class="side"><img src="img/now-tv.png" alt=""><span>TV &amp; Home Theatre</span></li><li><img src="img/now-beds.png" alt="A single bed with a scalloped bedhead and a bedside chest"><span>Beds &amp; Manchester</span></li><li class="side"><img src="img/now-heating.png" alt=""><span>Heating, Cooling &amp; Air Treatment</span></li></ol></div>
+        <div class="body">
+          <div class="title"><span class="badge now">Now</span><h3>Bed and bedside chest</h3><span class="badge">Chosen</span></div>
+          <p class="why">Lawrence's current tile. Chosen on 4 November over the ideas below.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="strip"><ol><li class="side"><img src="img/now-tv.png" alt=""><span>TV &amp; Home Theatre</span></li><li><img src="img/beds-a.png" alt="The same bed with a stack of folded sheets beside it"><span>Beds &amp; Manchester</span></li><li class="side"><img src="img/now-heating.png" alt=""><span>Heating, Cooling &amp; Air Treatment</span></li></ol></div>
+        <div class="body">
+          <div class="title"><span class="key">A</span><h3>Bed and folded sheets</h3><span class="badge">Suggested</span></div>
+          <p class="why">Keeps the bed and swaps the chest for a stack of sheets, so both halves of the name show. It's the smallest change, and the sheets keep the tile's soft, light palette.</p>
+          <ul class="uses"><li>Bed from Lawrence's Figma tile</li><li>L'Avenue 500TC Ivory Sheet Set <code>LAV500IVOSGL</code></li></ul>
+        </div>
+      </article>
+      <article class="card">
+        <div class="strip"><ol><li class="side"><img src="img/now-tv.png" alt=""><span>TV &amp; Home Theatre</span></li><li><img src="img/beds-b.png" alt="The same bed with a sage velvet cushion beside it"><span>Beds &amp; Manchester</span></li><li class="side"><img src="img/now-heating.png" alt=""><span>Heating, Cooling &amp; Air Treatment</span></li></ol></div>
+        <div class="body">
+          <div class="title"><span class="key">B</span><h3>Bed and velvet cushion</h3></div>
+          <p class="why">Same bed, with a sage velvet European pillowcase. It still says Manchester, and the colour lifts a tile that is otherwise grey and cream.</p>
+          <ul class="uses"><li>Bed from Lawrence's Figma tile</li><li>L'Avenue Velvet European Pillowcase, Sage <code>VEL-09-SA-EU</code></li></ul>
+        </div>
+      </article>
+      <article class="card">
+        <div class="strip"><ol><li class="side"><img src="img/now-tv.png" alt=""><span>TV &amp; Home Theatre</span></li><li><img src="img/beds-d.png" alt="A mattress on a grey base with a gold velvet cushion beside it"><span>Beds &amp; Manchester</span></li><li class="side"><img src="img/now-heating.png" alt=""><span>Heating, Cooling &amp; Air Treatment</span></li></ol></div>
+        <div class="body">
+          <div class="title"><span class="key">C</span><h3>Mattress and gold cushion</h3></div>
+          <p class="why">Leads with a mattress instead of a bed frame, for if mattresses should be the face of the category. The mattress is wide and low, so this tile sits shorter, like TV &amp; Home Theatre.</p>
+          <ul class="uses"><li>Sealy Posturepedic Crown Jewel, the concept's current mattress photo</li><li>L'Avenue Velvet European Pillowcase, Gold <code>VEL-08-GO-EU</code></li></ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="cat" aria-labelledby="h-carpet">
+    <div class="cat-head">
+      <h2 id="h-carpet">Carpet, Flooring &amp; Rugs</h2>
+      <p>The current tile has a rug and a timber plank but no carpet, and the pale rug fades into the tile's grey. A shows all three parts of the name; C is the smallest change.</p>
+    </div>
+    <div class="cards">
+      <article class="card pick">
+        <div class="strip"><ol><li class="side"><img src="img/now-connected.png" alt=""><span>Connected Home</span></li><li><img src="img/now-carpet.png" alt="A pale patterned rug and a timber plank"><span>Carpet, Flooring &amp; Rugs</span></li><li class="side"><img src="img/now-toys.png" alt=""><span>Toys, Baby &amp; Hobbies</span></li></ol></div>
+        <div class="body">
+          <div class="title"><span class="badge now">Now</span><h3>Pale rug and timber plank</h3><span class="badge">Chosen</span></div>
+          <p class="why">Lawrence's current tile. Chosen on 4 November over the ideas below.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="strip"><ol><li class="side"><img src="img/now-connected.png" alt=""><span>Connected Home</span></li><li><img src="img/carpet-d.png" alt="A traditional rug beside a fan of carpet and timber samples"><span>Carpet, Flooring &amp; Rugs</span></li><li class="side"><img src="img/now-toys.png" alt=""><span>Toys, Baby &amp; Hobbies</span></li></ol></div>
+        <div class="body">
+          <div class="title"><span class="key">A</span><h3>Rug and flooring samples</h3><span class="badge">Suggested</span></div>
+          <p class="why">A traditional rug next to a fan of samples: two carpets with timber between them. All three parts of the name in one tile, and a fan of samples looks like choosing flooring in store.</p>
+          <ul class="uses"><li>Highfield Motif Coral Boarder Rug <code>HFIELD1331OV1CL</code></li><li>Hycraft Pebble Grid Carpet, Shale <code>PEBBLEGRID745</code></li><li>Topgrain Classic Timber Flooring, Maple <code>TPG00112</code></li><li>Naturally Smart Naturally Textured Carpet <code>NATTEXT21TR</code></li></ul>
+        </div>
+      </article>
+      <article class="card">
+        <div class="strip"><ol><li class="side"><img src="img/now-connected.png" alt=""><span>Connected Home</span></li><li><img src="img/carpet-c.png" alt="A traditional rug beside a tall pine plank"><span>Carpet, Flooring &amp; Rugs</span></li><li class="side"><img src="img/now-toys.png" alt=""><span>Toys, Baby &amp; Hobbies</span></li></ol></div>
+        <div class="body">
+          <div class="title"><span class="key">B</span><h3>Rug and pine plank</h3></div>
+          <p class="why">The same rug with one plank. It's the easiest to read at small sizes and on phones, but like the current tile it has no carpet.</p>
+          <ul class="uses"><li>Highfield Motif Coral Boarder Rug <code>HFIELD1331OV1CL</code></li><li>Isocore Pine Collection Coconino Hybrid Flooring <code>P20062923A06</code></li></ul>
+        </div>
+      </article>
+      <article class="card">
+        <div class="strip"><ol><li class="side"><img src="img/now-connected.png" alt=""><span>Connected Home</span></li><li><img src="img/carpet-b.png" alt="A grey-green layered rug beside the current timber plank"><span>Carpet, Flooring &amp; Rugs</span></li><li class="side"><img src="img/now-toys.png" alt=""><span>Toys, Baby &amp; Hobbies</span></li></ol></div>
+        <div class="body">
+          <div class="title"><span class="key">C</span><h3>Bolder rug, same timber</h3></div>
+          <p class="why">Keeps Lawrence's timber plank and swaps the pale rug for a grey-green one that stands out from the tile. The smallest change, still without carpet.</p>
+          <ul class="uses"><li>Brink &amp; Campman Element Chad Grey Green Rug <code>8719128022635</code></li><li>Timber plank from Lawrence's Figma tile</li></ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="notes" aria-label="How these were made">
+    <div class="note">
+      <h3>How these were made</h3>
+      <ul>
+        <li>Every product is a Harvey Norman AU catalogue photo, cut out and placed to the rules measured from the Figma row.</li>
+        <li>The tiles around them are captured from Templates 1.0 at 100%, so the comparison is like for like.</li>
+        <li>Nothing was changed in Figma. The file was only viewed.</li>
+      </ul>
+    </div>
+    <div class="note">
+      <h3>To use one</h3>
+      <ul>
+        <li>Pick an option for each tile, then rebuild it in the Figma frame from the products listed on its card.</li>
+        <li>A and B for Beds reuse the bed already in the tile, so only one product changes.</li>
+        <li>Check the folded sheets at phone size (88px tiles), where thin layers can merge.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var tiles = [
+    ['kitchen', 'Kitchen Appliances'], ['furniture', 'Furniture, Outdoor & BBQs'], ['computers', 'Computers & Tablets'],
+    ['phones', 'Mobile Phones & Wearables'], ['vacuum', 'Vacuum & Laundry'], ['tv', 'TV & Home Theatre'],
+    ['beds', 'Beds & Manchester'], ['heating', 'Heating, Cooling & Air Treatment'], ['health', 'Health, Fitness & Beauty'],
+    ['games', 'Games Hub'], ['cameras', 'Cameras, Printers & PhotoCentre'], ['headphones', 'Headphones, Audio & Music'],
+    ['bathroom', 'Bathroom, Tiles & Rennovations'], ['connected', 'Connected Home'], ['carpet', 'Carpet, Flooring & Rugs'],
+    ['toys', 'Toys, Baby & Hobbies'], ['car', 'Car, Travel & Pet Supplies'], ['gift', 'Gift Cards'], ['sale', 'Hot Deals']
+  ];
+  var letters = { 'beds-a': 'A', 'beds-b': 'B', 'beds-d': 'C', 'carpet-d': 'A', 'carpet-c': 'B', 'carpet-b': 'C' };
+  var row = document.getElementById('row');
+  var scroller = document.getElementById('scroller');
+  var els = {};
+  tiles.forEach(function (t) {
+    var li = document.createElement('li'); li.className = 't';
+    var img = document.createElement('img'); img.src = 'img/now-' + t[0] + '.png'; img.alt = ''; img.width = 134; img.height = 134;
+    var span = document.createElement('span'); span.textContent = t[1]; if (t[0] === 'sale') span.className = 'sale';
+    li.appendChild(img); li.appendChild(span); row.appendChild(li);
+    els[t[0]] = { li: li, img: img };
+  });
+  function apply(cat, value, scroll) {
+    var e = els[cat];
+    var chip = e.li.querySelector('.chip');
+    if (!chip) { chip = document.createElement('b'); chip.className = 'chip'; e.li.appendChild(chip); }
+    if (value === 'now') { e.img.src = 'img/now-' + cat + '.png'; chip.textContent = 'Now'; chip.className = 'chip now'; }
+    else { e.img.src = 'img/' + value + '.png'; chip.textContent = 'Idea ' + letters[value]; chip.className = 'chip'; }
+    if (scroll) {
+      var left = e.li.offsetLeft - (scroller.clientWidth - e.li.offsetWidth) / 2;
+      scroller.scrollTo({ left: Math.max(0, left) });
+    }
+  }
+  ['beds', 'carpet'].forEach(function (cat) {
+    document.querySelectorAll('input[name="' + cat + '"]').forEach(function (r) {
+      if (r.checked) apply(cat, r.value, false);
+      r.addEventListener('change', function () { apply(cat, r.value, true); });
+    });
+  });
+  // Open with Beds & Manchester in view
+  requestAnimationFrame(function () {
+    var e = els.beds.li;
+    scroller.scrollLeft = Math.max(0, e.offsetLeft - (scroller.clientWidth - e.offsetWidth) / 2 - 300);
+  });
+})();
+</script>
+
+</body>
+</html>
