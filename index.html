@@ -184,6 +184,25 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
 @container (min-width: 640px) {
   .hn-vcn.hn-vcn--circle .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
 }
+/* Skip link: hidden until it takes keyboard focus, then shown over the rail's top-left corner */
+.hn-vcn { position: relative; }
+.hn-vcn .hn-vcn__skip {
+  position: absolute; z-index: 2; left: var(--spacing-sm); top: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs); border-radius: var(--radius-lg);
+  background: var(--color-background-default); color: var(--color-text-primary);
+  font: var(--font-weight-bold) var(--font-size-sm)/var(--line-height-md) var(--font-family-utility);
+  box-shadow: var(--hn-vcn-arrow-shadow); transform: translateY(-200%); opacity: 0; pointer-events: none;
+}
+.hn-vcn .hn-vcn__skip:focus { transform: none; opacity: 1; pointer-events: auto; outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__end { display: block; height: 0; overflow: hidden; }
+.hn-vcn .hn-vcn__end:focus { outline: none; }
+/* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
+@media (hover: hover) and (pointer: fine) {
+  @container (min-width: 640px) {
+    .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+    .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+  }
+}
 /* Forced colours (Windows high contrast): the grey fills disappear, so the arrows and tiles keep an edge */
 @media (forced-colors: active) {
   .hn-vcn .hn-vcn__arrow { border: var(--border-sm) solid ButtonText; }
@@ -210,10 +229,11 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
     <img class="live" id="hero" src="live-1440-hero.jpg" alt="The live lead space (hero banner), captured 2 November 2026" width="1440" height="560">
     <div id="rails">
     <nav class="hn-vcn hn-vcn--images hn-vcn--tiles hn-vcn--full" aria-label="Shop by category" data-component="Category Rail/Square Tiles" data-fs-element="Category Rail" data-concept="2" data-width="full">
+  <a class="hn-vcn__skip" href="#hn-vcn-end-2f">Skip categories</a>
   <div class="hn-vcn__frame">
     <div class="hn-vcn__viewport">
       <button class="hn-vcn__arrow hn-vcn__arrow--prev" type="button" aria-controls="hn-vcn-list-2f" aria-label="Previous categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="previous" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
-      <ul class="hn-vcn__list" id="hn-vcn-list-2f">
+      <ul class="hn-vcn__list" id="hn-vcn-list-2f" role="list">
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/kitchen-appliances" draggable="false" data-fs-element="Category Rail Tile" data-category="Kitchen Appliances" data-position="1"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" src="img/vcn-category-kitchen.png" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Kitchen Appliances</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/furniture-outdoor-bbqs" draggable="false" data-fs-element="Category Rail Tile" data-category="Furniture, Outdoor &amp; BBQs" data-position="2"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" src="img/vcn-category-furniture.png" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Furniture, Outdoor &amp; BBQs</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/computers-tablets" draggable="false" data-fs-element="Category Rail Tile" data-category="Computers &amp; Tablets" data-position="3"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" src="img/vcn-category-computers.png" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Computers &amp; Tablets</span></a></li>
@@ -237,12 +257,14 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
       <button class="hn-vcn__arrow hn-vcn__arrow--next" type="button" aria-controls="hn-vcn-list-2f" aria-label="Next categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="next"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
     </div>
   </div>
+  <span class="hn-vcn__end" id="hn-vcn-end-2f" tabindex="-1"></span>
 </nav>
     <nav class="hn-vcn hn-vcn--images hn-vcn--deals hn-vcn--tiles hn-vcn--full" aria-label="Shop Black Friday deals by category" data-component="Category Rail/Square Tiles" data-fs-element="Category Rail" data-concept="3" data-width="full" hidden>
+  <a class="hn-vcn__skip" href="#hn-vcn-end-3f">Skip categories</a>
   <div class="hn-vcn__frame">
     <div class="hn-vcn__viewport">
       <button class="hn-vcn__arrow hn-vcn__arrow--prev" type="button" aria-controls="hn-vcn-list-3f" aria-label="Previous categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="previous" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
-      <ul class="hn-vcn__list" id="hn-vcn-list-3f">
+      <ul class="hn-vcn__list" id="hn-vcn-list-3f" role="list">
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday" draggable="false" data-fs-element="Category Rail Tile" data-category="Black Friday Deals" data-position="1"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-black-friday-deals-on-now.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Black Friday Deals</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/computers-technology/laptop-sale" draggable="false" data-fs-element="Category Rail Tile" data-category="Laptops" data-position="2"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" src="img/vcn-bf-laptop.png" alt="" width="200" height="148" decoding="async" draggable="false"><img class="hn-vcn__tag" src="img/vcn-sale-tag.png" alt="" width="50" height="50" decoding="async" draggable="false"></span><span class="hn-vcn__label">Laptops</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/computers-technology/desktop-all-in-one-sale" draggable="false" data-fs-element="Category Rail Tile" data-category="Desktop PCs" data-position="3"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" src="img/vcn-bf-desktop.png" alt="" width="200" height="148" decoding="async" draggable="false"><img class="hn-vcn__tag" src="img/vcn-sale-tag.png" alt="" width="50" height="50" decoding="async" draggable="false"></span><span class="hn-vcn__label">Desktop PCs</span></a></li>
@@ -265,6 +287,7 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
       <button class="hn-vcn__arrow hn-vcn__arrow--next" type="button" aria-controls="hn-vcn-list-3f" aria-label="Next categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="next"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
     </div>
   </div>
+  <span class="hn-vcn__end" id="hn-vcn-end-3f" tabindex="-1"></span>
 </nav>
     </div>
     <img class="live" id="rest" src="live-1440-rest.jpg" alt="The rest of the live homepage below the lead space: Click and Collect, promotions, featured products, brands and footer" width="1440" height="6900" loading="lazy">
@@ -319,6 +342,9 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
       const properties = Object.assign({ concept: nav.dataset.concept, width: nav.dataset.width }, props);
       try { if (typeof fs.event === "function") fs.event(name, properties); else fs("trackEvent", { name, properties }); } catch (e) {}
     };
+    // Skip link: move focus past the rail (browsers, Safari especially, don't always move focus to an in-page target)
+    const skip = nav.querySelector(".hn-vcn__skip"), end = nav.querySelector(".hn-vcn__end");
+    if (skip && end) skip.addEventListener("click", (e) => { e.preventDefault(); end.focus(); });
     prev.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "previous" }); page(-1); });
     next.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "next" }); page(1); });
     list.addEventListener("click", (e) => {

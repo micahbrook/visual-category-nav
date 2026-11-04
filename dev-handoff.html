@@ -52,22 +52,37 @@ document.addEventListener("DOMContentLoaded", () => {
     <ul class="steps">
       <li><strong>One component.</strong> Every tile is a link, one image and a label. The CSS sets the 134px tile (88px on phones), its 4px corners and the 100 × 74 image container once. To change a category’s image, upload a new transparent 200 × 148 PNG under the same name; nothing in the code changes.</li>
       <li><strong>Self-contained.</strong> Markup, a scoped <code>&lt;style&gt;</code> and a plain <code>&lt;script&gt;</code>: no jQuery, no site CSS. Container queries set the sizes, so it fits wherever it’s pasted.</li>
-      <li><strong>Accessible.</strong> A labelled <code>nav</code> with a list of links, GEL arrows with labels, a visible focus ring, and a focused tile never hidden under an arrow. axe-core finds no WCAG 2.2 AA issues at phone, tablet and desktop widths.</li>
+      <li><strong>Accessible.</strong> Tested against WCAG 2.2 AA; details below. Please keep the <code>role="list"</code>, the skip link, the arrow labels and the empty <code>alt</code> on tile images when you change it.</li>
       <li><strong>Fullstory.</strong> Tiles carry <code>data-fs-element="Category Rail Tile"</code>, <code>data-category</code> and <code>data-position</code>. When Fullstory is on the page, the script sends Category Rail Tile Clicked, Category Rail Arrow Clicked and Category Rail Scrolled, each with the concept and position details.</li>
     </ul>
     <div id="status" role="status" aria-live="polite"></div>
   </header>
+  <section class="card" aria-labelledby="h-a11y">
+    <h2 id="h-a11y">Accessibility, tested 5 November 2026</h2>
+    <p>Both blocks pass axe-core (WCAG 2.2 A and AA rules) at 375, 768, 1024, 1440 and 1920px. These checks cover what automated tools miss:</p>
+    <ul class="steps">
+      <li><strong>Screen readers (VoiceOver, NVDA, TalkBack).</strong> The rail is a navigation landmark, “Shop by category” (or “Shop Black Friday deals by category”), holding a list of 19 (or 18) links, each named by its label. Tile pictures are decorative (<code>alt=""</code>) so the label isn’t read twice. <code>role="list"</code> keeps the list announced in Safari, which otherwise drops it when bullets are removed.</li>
+      <li><strong>Keyboard only.</strong> The first Tab stop is a “Skip categories” link that appears on focus and jumps past the rail. Every tile and arrow shows a 2px focus ring 2px outside it. A tile that takes focus under an arrow, or past the rail’s edge, scrolls fully into view.</li>
+      <li><strong>Low vision.</strong> No sideways page scroll at 320px, the same as 400% zoom; only the rail itself scrolls. With WCAG text-spacing overrides, no label clips or overlaps. Labels are 11.9:1 against white, the red Hot Deals label 5.67:1, and the focus ring is near-black on white.</li>
+      <li><strong>Windows high contrast.</strong> Tiles and arrows keep a visible edge when the page’s own colours are replaced.</li>
+      <li><strong>Colour.</strong> Nothing relies on colour alone: Hot Deals and the SALE tags carry words.</li>
+      <li><strong>Motor.</strong> Tiles are at least 88 × 118px and arrows 44 × 44px (WCAG asks for 24 × 24). Dragging is never required: mouse users get the arrows from 640px wide, and touch screens scroll natively.</li>
+      <li><strong>Motion.</strong> With reduced motion on, the arrows move the rail instantly instead of animating. Nothing moves on its own.</li>
+    </ul>
+    <p>Not yet tested: a session with real assistive-technology users, and VoiceOver on an actual iPhone. Worth doing before launch. The Black Friday lead tile is a picture of text; its label, “Black Friday Deals”, gives the same words as text.</p>
+  </section>
   <section class="block" aria-labelledby="h-everyday">
     <h2 id="h-everyday">Everyday row</h2>
     <p>The everyday row: Lawrence’s 19 image tiles, the main categories in order of traffic, then Gift Cards and Hot Deals.</p>
     <h3>Desktop</h3>
     <div class="stage desktop"><nav class="hn-vcn hn-vcn--images hn-vcn--tiles hn-vcn--full" aria-label="Shop by category" data-component="Category Rail/Square Tiles" data-fs-element="Category Rail" data-concept="2" data-width="full">
+  <a class="hn-vcn__skip" href="#hn-vcn-end-2f">Skip categories</a>
   <div class="hn-vcn__frame">
     <div class="hn-vcn__viewport">
       <button class="hn-vcn__arrow hn-vcn__arrow--prev" type="button" aria-controls="hn-vcn-list-2fdev" aria-label="Previous categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="previous" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
       <!-- Each <li> is one tile. To update it, change its href, its image (a 200 x 148 PNG for the 100 x 74 image
            container) and its label; to add a category, copy an <li>. The layout lives in the CSS, not here. -->
-      <ul class="hn-vcn__list" id="hn-vcn-list-2fdev">
+      <ul class="hn-vcn__list" id="hn-vcn-list-2fdev" role="list">
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/kitchen-appliances" draggable="false" data-fs-element="Category Rail Tile" data-category="Kitchen Appliances" data-position="1"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-category-kitchen.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Kitchen Appliances</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/furniture-outdoor-bbqs" draggable="false" data-fs-element="Category Rail Tile" data-category="Furniture, Outdoor &amp; BBQs" data-position="2"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-category-furniture.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Furniture, Outdoor &amp; BBQs</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/computers-tablets" draggable="false" data-fs-element="Category Rail Tile" data-category="Computers &amp; Tablets" data-position="3"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-category-computers.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Computers &amp; Tablets</span></a></li>
@@ -91,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <button class="hn-vcn__arrow hn-vcn__arrow--next" type="button" aria-controls="hn-vcn-list-2fdev" aria-label="Next categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="next"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
     </div>
   </div>
+  <span class="hn-vcn__end" id="hn-vcn-end-2f" tabindex="-1"></span>
 </nav>
 <style>
 /* Visual Category Navigation · Templates 1.0 › Category Rail/Square Tiles · GEL tokens, theme hn */
@@ -236,6 +252,25 @@ document.addEventListener("DOMContentLoaded", () => {
 @container (min-width: 640px) {
   .hn-vcn.hn-vcn--circle .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
 }
+/* Skip link: hidden until it takes keyboard focus, then shown over the rail's top-left corner */
+.hn-vcn { position: relative; }
+.hn-vcn .hn-vcn__skip {
+  position: absolute; z-index: 2; left: var(--spacing-sm); top: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs); border-radius: var(--radius-lg);
+  background: var(--color-background-default); color: var(--color-text-primary);
+  font: var(--font-weight-bold) var(--font-size-sm)/var(--line-height-md) var(--font-family-utility);
+  box-shadow: var(--hn-vcn-arrow-shadow); transform: translateY(-200%); opacity: 0; pointer-events: none;
+}
+.hn-vcn .hn-vcn__skip:focus { transform: none; opacity: 1; pointer-events: auto; outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__end { display: block; height: 0; overflow: hidden; }
+.hn-vcn .hn-vcn__end:focus { outline: none; }
+/* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
+@media (hover: hover) and (pointer: fine) {
+  @container (min-width: 640px) {
+    .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+    .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+  }
+}
 /* Forced colours (Windows high contrast): the grey fills disappear, so the arrows and tiles keep an edge */
 @media (forced-colors: active) {
   .hn-vcn .hn-vcn__arrow { border: var(--border-sm) solid ButtonText; }
@@ -281,6 +316,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const properties = Object.assign({ concept: nav.dataset.concept, width: nav.dataset.width }, props);
       try { if (typeof fs.event === "function") fs.event(name, properties); else fs("trackEvent", { name, properties }); } catch (e) {}
     };
+    // Skip link: move focus past the rail (browsers, Safari especially, don't always move focus to an in-page target)
+    const skip = nav.querySelector(".hn-vcn__skip"), end = nav.querySelector(".hn-vcn__end");
+    if (skip && end) skip.addEventListener("click", (e) => { e.preventDefault(); end.focus(); });
     prev.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "previous" }); page(-1); });
     next.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "next" }); page(1); });
     list.addEventListener("click", (e) => {
@@ -335,12 +373,13 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
     <h3>Phone (375px)</h3>
     <div class="stage phone"><nav class="hn-vcn hn-vcn--images hn-vcn--tiles hn-vcn--full" aria-label="Shop by category" data-component="Category Rail/Square Tiles" data-fs-element="Category Rail" data-concept="2" data-width="full">
+  <a class="hn-vcn__skip" href="#hn-vcn-end-2f">Skip categories</a>
   <div class="hn-vcn__frame">
     <div class="hn-vcn__viewport">
       <button class="hn-vcn__arrow hn-vcn__arrow--prev" type="button" aria-controls="hn-vcn-list-2fmev" aria-label="Previous categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="previous" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
       <!-- Each <li> is one tile. To update it, change its href, its image (a 200 x 148 PNG for the 100 x 74 image
            container) and its label; to add a category, copy an <li>. The layout lives in the CSS, not here. -->
-      <ul class="hn-vcn__list" id="hn-vcn-list-2fmev">
+      <ul class="hn-vcn__list" id="hn-vcn-list-2fmev" role="list">
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/kitchen-appliances" draggable="false" data-fs-element="Category Rail Tile" data-category="Kitchen Appliances" data-position="1"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-category-kitchen.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Kitchen Appliances</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/furniture-outdoor-bbqs" draggable="false" data-fs-element="Category Rail Tile" data-category="Furniture, Outdoor &amp; BBQs" data-position="2"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-category-furniture.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Furniture, Outdoor &amp; BBQs</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/computers-tablets" draggable="false" data-fs-element="Category Rail Tile" data-category="Computers &amp; Tablets" data-position="3"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-category-computers.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"></span><span class="hn-vcn__label">Computers &amp; Tablets</span></a></li>
@@ -364,6 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <button class="hn-vcn__arrow hn-vcn__arrow--next" type="button" aria-controls="hn-vcn-list-2fmev" aria-label="Next categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="next"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
     </div>
   </div>
+  <span class="hn-vcn__end" id="hn-vcn-end-2f" tabindex="-1"></span>
 </nav>
 <style>
 /* Visual Category Navigation · Templates 1.0 › Category Rail/Square Tiles · GEL tokens, theme hn */
@@ -509,6 +549,25 @@ document.addEventListener("DOMContentLoaded", () => {
 @container (min-width: 640px) {
   .hn-vcn.hn-vcn--circle .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
 }
+/* Skip link: hidden until it takes keyboard focus, then shown over the rail's top-left corner */
+.hn-vcn { position: relative; }
+.hn-vcn .hn-vcn__skip {
+  position: absolute; z-index: 2; left: var(--spacing-sm); top: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs); border-radius: var(--radius-lg);
+  background: var(--color-background-default); color: var(--color-text-primary);
+  font: var(--font-weight-bold) var(--font-size-sm)/var(--line-height-md) var(--font-family-utility);
+  box-shadow: var(--hn-vcn-arrow-shadow); transform: translateY(-200%); opacity: 0; pointer-events: none;
+}
+.hn-vcn .hn-vcn__skip:focus { transform: none; opacity: 1; pointer-events: auto; outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__end { display: block; height: 0; overflow: hidden; }
+.hn-vcn .hn-vcn__end:focus { outline: none; }
+/* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
+@media (hover: hover) and (pointer: fine) {
+  @container (min-width: 640px) {
+    .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+    .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+  }
+}
 /* Forced colours (Windows high contrast): the grey fills disappear, so the arrows and tiles keep an edge */
 @media (forced-colors: active) {
   .hn-vcn .hn-vcn__arrow { border: var(--border-sm) solid ButtonText; }
@@ -554,6 +613,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const properties = Object.assign({ concept: nav.dataset.concept, width: nav.dataset.width }, props);
       try { if (typeof fs.event === "function") fs.event(name, properties); else fs("trackEvent", { name, properties }); } catch (e) {}
     };
+    // Skip link: move focus past the rail (browsers, Safari especially, don't always move focus to an in-page target)
+    const skip = nav.querySelector(".hn-vcn__skip"), end = nav.querySelector(".hn-vcn__end");
+    if (skip && end) skip.addEventListener("click", (e) => { e.preventDefault(); end.focus(); });
     prev.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "previous" }); page(-1); });
     next.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "next" }); page(1); });
     list.addEventListener("click", (e) => {
@@ -633,12 +695,13 @@ document.addEventListener("DOMContentLoaded", () => {
   - Check the links. They are the live category URLs on 2 Nov 2026 and are relative, so they work on staging too.
 --&gt;
 &lt;nav class=&quot;hn-vcn hn-vcn--images hn-vcn--tiles hn-vcn--full&quot; aria-label=&quot;Shop by category&quot; data-component=&quot;Category Rail/Square Tiles&quot; data-fs-element=&quot;Category Rail&quot; data-concept=&quot;2&quot; data-width=&quot;full&quot;&gt;
+  &lt;a class=&quot;hn-vcn__skip&quot; href=&quot;#hn-vcn-end-2f&quot;&gt;Skip categories&lt;/a&gt;
   &lt;div class=&quot;hn-vcn__frame&quot;&gt;
     &lt;div class=&quot;hn-vcn__viewport&quot;&gt;
       &lt;button class=&quot;hn-vcn__arrow hn-vcn__arrow--prev&quot; type=&quot;button&quot; aria-controls=&quot;hn-vcn-list-2f&quot; aria-label=&quot;Previous categories&quot; data-gel-component=&quot;Button/Default Small&quot; data-fs-element=&quot;Category Rail Arrow&quot; data-direction=&quot;previous&quot; hidden&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
       &lt;!-- Each &lt;li&gt; is one tile. To update it, change its href, its image (a 200 x 148 PNG for the 100 x 74 image
            container) and its label; to add a category, copy an &lt;li&gt;. The layout lives in the CSS, not here. --&gt;
-      &lt;ul class=&quot;hn-vcn__list&quot; id=&quot;hn-vcn-list-2f&quot;&gt;
+      &lt;ul class=&quot;hn-vcn__list&quot; id=&quot;hn-vcn-list-2f&quot; role=&quot;list&quot;&gt;
         &lt;li class=&quot;hn-vcn__item&quot;&gt;&lt;a class=&quot;hn-vcn__tile&quot; href=&quot;/kitchen-appliances&quot; draggable=&quot;false&quot; data-fs-element=&quot;Category Rail Tile&quot; data-category=&quot;Kitchen Appliances&quot; data-position=&quot;1&quot;&gt;&lt;span class=&quot;hn-vcn__media hn-vcn__media--product&quot;&gt;&lt;img class=&quot;hn-vcn__product&quot; src=&quot;https://hnau.imgix.net/media/wysiwyg/visual-category-nav/vcn-category-kitchen.png?auto=format&quot; alt=&quot;&quot; width=&quot;200&quot; height=&quot;148&quot; decoding=&quot;async&quot; draggable=&quot;false&quot;&gt;&lt;/span&gt;&lt;span class=&quot;hn-vcn__label&quot;&gt;Kitchen Appliances&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
         &lt;li class=&quot;hn-vcn__item&quot;&gt;&lt;a class=&quot;hn-vcn__tile&quot; href=&quot;/furniture-outdoor-bbqs&quot; draggable=&quot;false&quot; data-fs-element=&quot;Category Rail Tile&quot; data-category=&quot;Furniture, Outdoor &amp;amp; BBQs&quot; data-position=&quot;2&quot;&gt;&lt;span class=&quot;hn-vcn__media hn-vcn__media--product&quot;&gt;&lt;img class=&quot;hn-vcn__product&quot; src=&quot;https://hnau.imgix.net/media/wysiwyg/visual-category-nav/vcn-category-furniture.png?auto=format&quot; alt=&quot;&quot; width=&quot;200&quot; height=&quot;148&quot; decoding=&quot;async&quot; draggable=&quot;false&quot;&gt;&lt;/span&gt;&lt;span class=&quot;hn-vcn__label&quot;&gt;Furniture, Outdoor &amp;amp; BBQs&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
         &lt;li class=&quot;hn-vcn__item&quot;&gt;&lt;a class=&quot;hn-vcn__tile&quot; href=&quot;/computers-tablets&quot; draggable=&quot;false&quot; data-fs-element=&quot;Category Rail Tile&quot; data-category=&quot;Computers &amp;amp; Tablets&quot; data-position=&quot;3&quot;&gt;&lt;span class=&quot;hn-vcn__media hn-vcn__media--product&quot;&gt;&lt;img class=&quot;hn-vcn__product&quot; src=&quot;https://hnau.imgix.net/media/wysiwyg/visual-category-nav/vcn-category-computers.png?auto=format&quot; alt=&quot;&quot; width=&quot;200&quot; height=&quot;148&quot; decoding=&quot;async&quot; draggable=&quot;false&quot;&gt;&lt;/span&gt;&lt;span class=&quot;hn-vcn__label&quot;&gt;Computers &amp;amp; Tablets&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
@@ -662,6 +725,7 @@ document.addEventListener("DOMContentLoaded", () => {
       &lt;button class=&quot;hn-vcn__arrow hn-vcn__arrow--next&quot; type=&quot;button&quot; aria-controls=&quot;hn-vcn-list-2f&quot; aria-label=&quot;Next categories&quot; data-gel-component=&quot;Button/Default Small&quot; data-fs-element=&quot;Category Rail Arrow&quot; data-direction=&quot;next&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
+  &lt;span class=&quot;hn-vcn__end&quot; id=&quot;hn-vcn-end-2f&quot; tabindex=&quot;-1&quot;&gt;&lt;/span&gt;
 &lt;/nav&gt;
 &lt;style&gt;
 /* Visual Category Navigation · Templates 1.0 › Category Rail/Square Tiles · GEL tokens, theme hn */
@@ -807,6 +871,25 @@ document.addEventListener("DOMContentLoaded", () => {
 @container (min-width: 640px) {
   .hn-vcn.hn-vcn--circle .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
 }
+/* Skip link: hidden until it takes keyboard focus, then shown over the rail&#x27;s top-left corner */
+.hn-vcn { position: relative; }
+.hn-vcn .hn-vcn__skip {
+  position: absolute; z-index: 2; left: var(--spacing-sm); top: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs); border-radius: var(--radius-lg);
+  background: var(--color-background-default); color: var(--color-text-primary);
+  font: var(--font-weight-bold) var(--font-size-sm)/var(--line-height-md) var(--font-family-utility);
+  box-shadow: var(--hn-vcn-arrow-shadow); transform: translateY(-200%); opacity: 0; pointer-events: none;
+}
+.hn-vcn .hn-vcn__skip:focus { transform: none; opacity: 1; pointer-events: auto; outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__end { display: block; height: 0; overflow: hidden; }
+.hn-vcn .hn-vcn__end:focus { outline: none; }
+/* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
+@media (hover: hover) and (pointer: fine) {
+  @container (min-width: 640px) {
+    .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+    .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+  }
+}
 /* Forced colours (Windows high contrast): the grey fills disappear, so the arrows and tiles keep an edge */
 @media (forced-colors: active) {
   .hn-vcn .hn-vcn__arrow { border: var(--border-sm) solid ButtonText; }
@@ -852,6 +935,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const properties = Object.assign({ concept: nav.dataset.concept, width: nav.dataset.width }, props);
       try { if (typeof fs.event === &quot;function&quot;) fs.event(name, properties); else fs(&quot;trackEvent&quot;, { name, properties }); } catch (e) {}
     };
+    // Skip link: move focus past the rail (browsers, Safari especially, don&#x27;t always move focus to an in-page target)
+    const skip = nav.querySelector(&quot;.hn-vcn__skip&quot;), end = nav.querySelector(&quot;.hn-vcn__end&quot;);
+    if (skip &amp;&amp; end) skip.addEventListener(&quot;click&quot;, (e) =&gt; { e.preventDefault(); end.focus(); });
     prev.addEventListener(&quot;click&quot;, () =&gt; { track(&quot;Category Rail Arrow Clicked&quot;, { direction: &quot;previous&quot; }); page(-1); });
     next.addEventListener(&quot;click&quot;, () =&gt; { track(&quot;Category Rail Arrow Clicked&quot;, { direction: &quot;next&quot; }); page(1); });
     list.addEventListener(&quot;click&quot;, (e) =&gt; {
@@ -910,10 +996,11 @@ document.addEventListener("DOMContentLoaded", () => {
     <p>Seasonal: the Black Friday Deals, On Now tile, then 17 deal categories with the SALE tag. Swap it in for the event and back out after.</p>
     <h3>Desktop</h3>
     <div class="stage desktop"><nav class="hn-vcn hn-vcn--images hn-vcn--deals hn-vcn--tiles hn-vcn--full" aria-label="Shop Black Friday deals by category" data-component="Category Rail/Square Tiles" data-fs-element="Category Rail" data-concept="3" data-width="full">
+  <a class="hn-vcn__skip" href="#hn-vcn-end-3f">Skip categories</a>
   <div class="hn-vcn__frame">
     <div class="hn-vcn__viewport">
       <button class="hn-vcn__arrow hn-vcn__arrow--prev" type="button" aria-controls="hn-vcn-list-3fdbl" aria-label="Previous categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="previous" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
-      <ul class="hn-vcn__list" id="hn-vcn-list-3fdbl">
+      <ul class="hn-vcn__list" id="hn-vcn-list-3fdbl" role="list">
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday" draggable="false" data-fs-element="Category Rail Tile" data-category="Black Friday Deals" data-position="1"><span class="hn-vcn__media hn-vcn__media--art"><img data-img="vcn-black-friday-deals-on-now.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Black Friday Deals</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/computers-technology/laptop-sale" draggable="false" data-fs-element="Category Rail Tile" data-category="Laptops" data-position="2"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-bf-laptop.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"><img class="hn-vcn__tag" data-img="vcn-sale-tag.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="50" height="50" decoding="async" draggable="false"></span><span class="hn-vcn__label">Laptops</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/computers-technology/desktop-all-in-one-sale" draggable="false" data-fs-element="Category Rail Tile" data-category="Desktop PCs" data-position="3"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-bf-desktop.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"><img class="hn-vcn__tag" data-img="vcn-sale-tag.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="50" height="50" decoding="async" draggable="false"></span><span class="hn-vcn__label">Desktop PCs</span></a></li>
@@ -936,6 +1023,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <button class="hn-vcn__arrow hn-vcn__arrow--next" type="button" aria-controls="hn-vcn-list-3fdbl" aria-label="Next categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="next"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
     </div>
   </div>
+  <span class="hn-vcn__end" id="hn-vcn-end-3f" tabindex="-1"></span>
 </nav>
 <style>
 /* Visual Category Navigation · Templates 1.0 › Category Rail/Square Tiles · GEL tokens, theme hn */
@@ -1081,6 +1169,25 @@ document.addEventListener("DOMContentLoaded", () => {
 @container (min-width: 640px) {
   .hn-vcn.hn-vcn--circle .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
 }
+/* Skip link: hidden until it takes keyboard focus, then shown over the rail's top-left corner */
+.hn-vcn { position: relative; }
+.hn-vcn .hn-vcn__skip {
+  position: absolute; z-index: 2; left: var(--spacing-sm); top: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs); border-radius: var(--radius-lg);
+  background: var(--color-background-default); color: var(--color-text-primary);
+  font: var(--font-weight-bold) var(--font-size-sm)/var(--line-height-md) var(--font-family-utility);
+  box-shadow: var(--hn-vcn-arrow-shadow); transform: translateY(-200%); opacity: 0; pointer-events: none;
+}
+.hn-vcn .hn-vcn__skip:focus { transform: none; opacity: 1; pointer-events: auto; outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__end { display: block; height: 0; overflow: hidden; }
+.hn-vcn .hn-vcn__end:focus { outline: none; }
+/* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
+@media (hover: hover) and (pointer: fine) {
+  @container (min-width: 640px) {
+    .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+    .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+  }
+}
 /* Forced colours (Windows high contrast): the grey fills disappear, so the arrows and tiles keep an edge */
 @media (forced-colors: active) {
   .hn-vcn .hn-vcn__arrow { border: var(--border-sm) solid ButtonText; }
@@ -1126,6 +1233,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const properties = Object.assign({ concept: nav.dataset.concept, width: nav.dataset.width }, props);
       try { if (typeof fs.event === "function") fs.event(name, properties); else fs("trackEvent", { name, properties }); } catch (e) {}
     };
+    // Skip link: move focus past the rail (browsers, Safari especially, don't always move focus to an in-page target)
+    const skip = nav.querySelector(".hn-vcn__skip"), end = nav.querySelector(".hn-vcn__end");
+    if (skip && end) skip.addEventListener("click", (e) => { e.preventDefault(); end.focus(); });
     prev.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "previous" }); page(-1); });
     next.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "next" }); page(1); });
     list.addEventListener("click", (e) => {
@@ -1180,10 +1290,11 @@ document.addEventListener("DOMContentLoaded", () => {
 </div>
     <h3>Phone (375px)</h3>
     <div class="stage phone"><nav class="hn-vcn hn-vcn--images hn-vcn--deals hn-vcn--tiles hn-vcn--full" aria-label="Shop Black Friday deals by category" data-component="Category Rail/Square Tiles" data-fs-element="Category Rail" data-concept="3" data-width="full">
+  <a class="hn-vcn__skip" href="#hn-vcn-end-3f">Skip categories</a>
   <div class="hn-vcn__frame">
     <div class="hn-vcn__viewport">
       <button class="hn-vcn__arrow hn-vcn__arrow--prev" type="button" aria-controls="hn-vcn-list-3fmbl" aria-label="Previous categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="previous" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
-      <ul class="hn-vcn__list" id="hn-vcn-list-3fmbl">
+      <ul class="hn-vcn__list" id="hn-vcn-list-3fmbl" role="list">
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday" draggable="false" data-fs-element="Category Rail Tile" data-category="Black Friday Deals" data-position="1"><span class="hn-vcn__media hn-vcn__media--art"><img data-img="vcn-black-friday-deals-on-now.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Black Friday Deals</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/computers-technology/laptop-sale" draggable="false" data-fs-element="Category Rail Tile" data-category="Laptops" data-position="2"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-bf-laptop.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"><img class="hn-vcn__tag" data-img="vcn-sale-tag.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="50" height="50" decoding="async" draggable="false"></span><span class="hn-vcn__label">Laptops</span></a></li>
         <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/computers-technology/desktop-all-in-one-sale" draggable="false" data-fs-element="Category Rail Tile" data-category="Desktop PCs" data-position="3"><span class="hn-vcn__media hn-vcn__media--product"><img class="hn-vcn__product" data-img="vcn-bf-desktop.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="200" height="148" decoding="async" draggable="false"><img class="hn-vcn__tag" data-img="vcn-sale-tag.png" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" width="50" height="50" decoding="async" draggable="false"></span><span class="hn-vcn__label">Desktop PCs</span></a></li>
@@ -1206,6 +1317,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <button class="hn-vcn__arrow hn-vcn__arrow--next" type="button" aria-controls="hn-vcn-list-3fmbl" aria-label="Next categories" data-gel-component="Button/Default Small" data-fs-element="Category Rail Arrow" data-direction="next"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
     </div>
   </div>
+  <span class="hn-vcn__end" id="hn-vcn-end-3f" tabindex="-1"></span>
 </nav>
 <style>
 /* Visual Category Navigation · Templates 1.0 › Category Rail/Square Tiles · GEL tokens, theme hn */
@@ -1351,6 +1463,25 @@ document.addEventListener("DOMContentLoaded", () => {
 @container (min-width: 640px) {
   .hn-vcn.hn-vcn--circle .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
 }
+/* Skip link: hidden until it takes keyboard focus, then shown over the rail's top-left corner */
+.hn-vcn { position: relative; }
+.hn-vcn .hn-vcn__skip {
+  position: absolute; z-index: 2; left: var(--spacing-sm); top: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs); border-radius: var(--radius-lg);
+  background: var(--color-background-default); color: var(--color-text-primary);
+  font: var(--font-weight-bold) var(--font-size-sm)/var(--line-height-md) var(--font-family-utility);
+  box-shadow: var(--hn-vcn-arrow-shadow); transform: translateY(-200%); opacity: 0; pointer-events: none;
+}
+.hn-vcn .hn-vcn__skip:focus { transform: none; opacity: 1; pointer-events: auto; outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__end { display: block; height: 0; overflow: hidden; }
+.hn-vcn .hn-vcn__end:focus { outline: none; }
+/* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
+@media (hover: hover) and (pointer: fine) {
+  @container (min-width: 640px) {
+    .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+    .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+  }
+}
 /* Forced colours (Windows high contrast): the grey fills disappear, so the arrows and tiles keep an edge */
 @media (forced-colors: active) {
   .hn-vcn .hn-vcn__arrow { border: var(--border-sm) solid ButtonText; }
@@ -1396,6 +1527,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const properties = Object.assign({ concept: nav.dataset.concept, width: nav.dataset.width }, props);
       try { if (typeof fs.event === "function") fs.event(name, properties); else fs("trackEvent", { name, properties }); } catch (e) {}
     };
+    // Skip link: move focus past the rail (browsers, Safari especially, don't always move focus to an in-page target)
+    const skip = nav.querySelector(".hn-vcn__skip"), end = nav.querySelector(".hn-vcn__end");
+    if (skip && end) skip.addEventListener("click", (e) => { e.preventDefault(); end.focus(); });
     prev.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "previous" }); page(-1); });
     next.addEventListener("click", () => { track("Category Rail Arrow Clicked", { direction: "next" }); page(1); });
     list.addEventListener("click", (e) => {
@@ -1471,10 +1605,11 @@ document.addEventListener("DOMContentLoaded", () => {
   - Check the links. They are the live category URLs on 2 Nov 2026 and are relative, so they work on staging too.
 --&gt;
 &lt;nav class=&quot;hn-vcn hn-vcn--images hn-vcn--deals hn-vcn--tiles hn-vcn--full&quot; aria-label=&quot;Shop Black Friday deals by category&quot; data-component=&quot;Category Rail/Square Tiles&quot; data-fs-element=&quot;Category Rail&quot; data-concept=&quot;3&quot; data-width=&quot;full&quot;&gt;
+  &lt;a class=&quot;hn-vcn__skip&quot; href=&quot;#hn-vcn-end-3f&quot;&gt;Skip categories&lt;/a&gt;
   &lt;div class=&quot;hn-vcn__frame&quot;&gt;
     &lt;div class=&quot;hn-vcn__viewport&quot;&gt;
       &lt;button class=&quot;hn-vcn__arrow hn-vcn__arrow--prev&quot; type=&quot;button&quot; aria-controls=&quot;hn-vcn-list-3f&quot; aria-label=&quot;Previous categories&quot; data-gel-component=&quot;Button/Default Small&quot; data-fs-element=&quot;Category Rail Arrow&quot; data-direction=&quot;previous&quot; hidden&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
-      &lt;ul class=&quot;hn-vcn__list&quot; id=&quot;hn-vcn-list-3f&quot;&gt;
+      &lt;ul class=&quot;hn-vcn__list&quot; id=&quot;hn-vcn-list-3f&quot; role=&quot;list&quot;&gt;
         &lt;li class=&quot;hn-vcn__item&quot;&gt;&lt;a class=&quot;hn-vcn__tile&quot; href=&quot;/black-friday&quot; draggable=&quot;false&quot; data-fs-element=&quot;Category Rail Tile&quot; data-category=&quot;Black Friday Deals&quot; data-position=&quot;1&quot;&gt;&lt;span class=&quot;hn-vcn__media hn-vcn__media--art&quot;&gt;&lt;img src=&quot;https://hnau.imgix.net/media/wysiwyg/visual-category-nav/vcn-black-friday-deals-on-now.png&quot; alt=&quot;&quot; width=&quot;134&quot; height=&quot;134&quot; decoding=&quot;async&quot; draggable=&quot;false&quot;&gt;&lt;/span&gt;&lt;span class=&quot;hn-vcn__label&quot;&gt;Black Friday Deals&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
         &lt;li class=&quot;hn-vcn__item&quot;&gt;&lt;a class=&quot;hn-vcn__tile&quot; href=&quot;/black-friday/computers-technology/laptop-sale&quot; draggable=&quot;false&quot; data-fs-element=&quot;Category Rail Tile&quot; data-category=&quot;Laptops&quot; data-position=&quot;2&quot;&gt;&lt;span class=&quot;hn-vcn__media hn-vcn__media--product&quot;&gt;&lt;img class=&quot;hn-vcn__product&quot; src=&quot;https://hnau.imgix.net/media/wysiwyg/visual-category-nav/vcn-bf-laptop.png?auto=format&quot; alt=&quot;&quot; width=&quot;200&quot; height=&quot;148&quot; decoding=&quot;async&quot; draggable=&quot;false&quot;&gt;&lt;img class=&quot;hn-vcn__tag&quot; src=&quot;https://hnau.imgix.net/media/wysiwyg/visual-category-nav/vcn-sale-tag.png&quot; alt=&quot;&quot; width=&quot;50&quot; height=&quot;50&quot; decoding=&quot;async&quot; draggable=&quot;false&quot;&gt;&lt;/span&gt;&lt;span class=&quot;hn-vcn__label&quot;&gt;Laptops&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
         &lt;li class=&quot;hn-vcn__item&quot;&gt;&lt;a class=&quot;hn-vcn__tile&quot; href=&quot;/black-friday/computers-technology/desktop-all-in-one-sale&quot; draggable=&quot;false&quot; data-fs-element=&quot;Category Rail Tile&quot; data-category=&quot;Desktop PCs&quot; data-position=&quot;3&quot;&gt;&lt;span class=&quot;hn-vcn__media hn-vcn__media--product&quot;&gt;&lt;img class=&quot;hn-vcn__product&quot; src=&quot;https://hnau.imgix.net/media/wysiwyg/visual-category-nav/vcn-bf-desktop.png?auto=format&quot; alt=&quot;&quot; width=&quot;200&quot; height=&quot;148&quot; decoding=&quot;async&quot; draggable=&quot;false&quot;&gt;&lt;img class=&quot;hn-vcn__tag&quot; src=&quot;https://hnau.imgix.net/media/wysiwyg/visual-category-nav/vcn-sale-tag.png&quot; alt=&quot;&quot; width=&quot;50&quot; height=&quot;50&quot; decoding=&quot;async&quot; draggable=&quot;false&quot;&gt;&lt;/span&gt;&lt;span class=&quot;hn-vcn__label&quot;&gt;Desktop PCs&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
@@ -1497,6 +1632,7 @@ document.addEventListener("DOMContentLoaded", () => {
       &lt;button class=&quot;hn-vcn__arrow hn-vcn__arrow--next&quot; type=&quot;button&quot; aria-controls=&quot;hn-vcn-list-3f&quot; aria-label=&quot;Next categories&quot; data-gel-component=&quot;Button/Default Small&quot; data-fs-element=&quot;Category Rail Arrow&quot; data-direction=&quot;next&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
     &lt;/div&gt;
   &lt;/div&gt;
+  &lt;span class=&quot;hn-vcn__end&quot; id=&quot;hn-vcn-end-3f&quot; tabindex=&quot;-1&quot;&gt;&lt;/span&gt;
 &lt;/nav&gt;
 &lt;style&gt;
 /* Visual Category Navigation · Templates 1.0 › Category Rail/Square Tiles · GEL tokens, theme hn */
@@ -1642,6 +1778,25 @@ document.addEventListener("DOMContentLoaded", () => {
 @container (min-width: 640px) {
   .hn-vcn.hn-vcn--circle .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
 }
+/* Skip link: hidden until it takes keyboard focus, then shown over the rail&#x27;s top-left corner */
+.hn-vcn { position: relative; }
+.hn-vcn .hn-vcn__skip {
+  position: absolute; z-index: 2; left: var(--spacing-sm); top: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs); border-radius: var(--radius-lg);
+  background: var(--color-background-default); color: var(--color-text-primary);
+  font: var(--font-weight-bold) var(--font-size-sm)/var(--line-height-md) var(--font-family-utility);
+  box-shadow: var(--hn-vcn-arrow-shadow); transform: translateY(-200%); opacity: 0; pointer-events: none;
+}
+.hn-vcn .hn-vcn__skip:focus { transform: none; opacity: 1; pointer-events: auto; outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__end { display: block; height: 0; overflow: hidden; }
+.hn-vcn .hn-vcn__end:focus { outline: none; }
+/* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
+@media (hover: hover) and (pointer: fine) {
+  @container (min-width: 640px) {
+    .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+    .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+  }
+}
 /* Forced colours (Windows high contrast): the grey fills disappear, so the arrows and tiles keep an edge */
 @media (forced-colors: active) {
   .hn-vcn .hn-vcn__arrow { border: var(--border-sm) solid ButtonText; }
@@ -1687,6 +1842,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const properties = Object.assign({ concept: nav.dataset.concept, width: nav.dataset.width }, props);
       try { if (typeof fs.event === &quot;function&quot;) fs.event(name, properties); else fs(&quot;trackEvent&quot;, { name, properties }); } catch (e) {}
     };
+    // Skip link: move focus past the rail (browsers, Safari especially, don&#x27;t always move focus to an in-page target)
+    const skip = nav.querySelector(&quot;.hn-vcn__skip&quot;), end = nav.querySelector(&quot;.hn-vcn__end&quot;);
+    if (skip &amp;&amp; end) skip.addEventListener(&quot;click&quot;, (e) =&gt; { e.preventDefault(); end.focus(); });
     prev.addEventListener(&quot;click&quot;, () =&gt; { track(&quot;Category Rail Arrow Clicked&quot;, { direction: &quot;previous&quot; }); page(-1); });
     next.addEventListener(&quot;click&quot;, () =&gt; { track(&quot;Category Rail Arrow Clicked&quot;, { direction: &quot;next&quot; }); page(1); });
     list.addEventListener(&quot;click&quot;, (e) =&gt; {
