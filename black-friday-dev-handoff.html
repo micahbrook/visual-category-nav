@@ -221,8 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
 .hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
 .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
-/* Arrows sit just inside the rail's edges (8px, then 12px from 1024): off the screen edge, over the gutter and the outer edge of
-   the end tile's tint, clear of its image */
+/* Arrows sit inside the rail's edges: 8px in on mid-size screens, 32px (spacing-xl, the page gutter) from 1024 */
 .hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-arrow-inset); }
 .hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-arrow-inset); }
 /* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
@@ -266,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xs); }
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
@@ -513,8 +512,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
 .hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
 .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
-/* Arrows sit just inside the rail's edges (8px, then 12px from 1024): off the screen edge, over the gutter and the outer edge of
-   the end tile's tint, clear of its image */
+/* Arrows sit inside the rail's edges: 8px in on mid-size screens, 32px (spacing-xl, the page gutter) from 1024 */
 .hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-arrow-inset); }
 .hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-arrow-inset); }
 /* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
@@ -558,7 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xs); }
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
@@ -828,8 +826,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
 .hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
 .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
-/* Arrows sit just inside the rail&#x27;s edges (8px, then 12px from 1024): off the screen edge, over the gutter and the outer edge of
-   the end tile&#x27;s tint, clear of its image */
+/* Arrows sit inside the rail&#x27;s edges: 8px in on mid-size screens, 32px (spacing-xl, the page gutter) from 1024 */
 .hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-arrow-inset); }
 .hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-arrow-inset); }
 /* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
@@ -873,7 +870,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xs); }
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
