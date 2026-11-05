@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Black Friday Launcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600;700&family=Lato:wght@400;700&display=swap">
+<style>
+:root{ --ui-ground:#e8ecef; --ui-bar:#ffffff; --ui-ink:#1d2730; --ui-muted:#56626d; --ui-line:#d3dae0; --ui-accent:#005b9c; --ui-accent-ink:#ffffff; --ui-chip:#eef3f7; --ui-code:#f4f6f8; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ color-scheme:dark; --ui-ground:#12171b; --ui-bar:#1b2228; --ui-ink:#e7edf2; --ui-muted:#a3b0bb; --ui-line:#2c363f; --ui-accent:#7fb8e6; --ui-accent-ink:#0c1a26; --ui-chip:#24303a; --ui-code:#161c21; } }
+:root[data-theme="dark"]{ color-scheme:dark; --ui-ground:#12171b; --ui-bar:#1b2228; --ui-ink:#e7edf2; --ui-muted:#a3b0bb; --ui-line:#2c363f; --ui-accent:#7fb8e6; --ui-accent-ink:#0c1a26; --ui-chip:#24303a; --ui-code:#161c21; }
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 "Lato",Arial,sans-serif;padding-inline:16px;padding-block:0 40px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;margin-inline:-16px;padding:12px 16px;background:var(--ui-bar);border-bottom:1px solid var(--ui-line);display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.bar h1{margin:0 8px 0 0;font:700 17px/1.2 "Albert Sans",Arial,sans-serif;letter-spacing:-.01em}
+.bar h1 small{display:block;font:400 12px/1.3 "Lato",Arial,sans-serif;color:var(--ui-muted)}
+.switch{display:flex;flex-wrap:wrap;gap:3px;padding:3px;background:var(--ui-chip);border-radius:10px;max-width:100%}
+.switch button{font:700 13px/1 "Lato",Arial,sans-serif;color:var(--ui-ink);background:transparent;border:0;border-radius:7px;padding:9px 11px;cursor:pointer;min-height:36px;white-space:nowrap}
+.switch button[aria-pressed="true"]{background:var(--ui-accent);color:var(--ui-accent-ink)}
+.switch button:focus-visible,.dev button:focus-visible,.dev a:focus-visible{outline:2px solid var(--ui-accent);outline-offset:2px}
+.about{margin:0;padding:10px 0 0;font-size:13px;color:var(--ui-muted);max-width:110ch}
+.history-link{color:var(--ui-accent);font-weight:700;white-space:nowrap}
+.stage{padding-top:16px}
+.frame{background:#fff;margin:0 auto;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.12),0 8px 32px rgba(0,0,0,.10)}
+.frame[data-screen="375"]{border-radius:28px}
+.live{display:block;width:100%;height:auto}
+.dev{max-width:1100px;margin:28px auto 0;background:var(--ui-bar);border:1px solid var(--ui-line);border-radius:12px;padding:20px}
+.dev h2{margin:0 0 4px;font:700 18px/1.25 "Albert Sans",Arial,sans-serif}
+.dev h3{margin:22px 0 8px;font:700 15px/1.3 "Albert Sans",Arial,sans-serif}
+.dev p,.dev li{font-size:14px} .dev p{margin:0 0 8px;color:var(--ui-muted)}
+.dev ol,.dev ul{margin:0;padding-left:20px} .dev li{margin:0 0 6px}
+.dev code{font:12.5px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--ui-code);padding:1px 4px;border-radius:4px}
+.files{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin-top:10px}
+.file{display:flex;flex-direction:column;gap:6px;padding:12px;border:1px solid var(--ui-line);border-radius:10px}
+.file strong{font-size:14px} .file span{font-size:12px;color:var(--ui-muted)}
+.file div{display:flex;gap:8px;flex-wrap:wrap}
+.file button,.file a{font:700 13px/1 "Lato",Arial,sans-serif;padding:9px 12px;min-height:36px;border-radius:7px;border:1px solid var(--ui-line);background:var(--ui-chip);color:var(--ui-ink);text-decoration:none;cursor:pointer;display:inline-flex;align-items:center}
+.file[data-current] {border-color:var(--ui-accent)}
+#status{min-height:20px;font-size:13px;color:var(--ui-muted);margin-top:8px}
+#codebox{display:none;width:100%;height:220px;margin-top:8px;font:12px/1.4 ui-monospace,Menlo,Consolas,monospace;background:var(--ui-code);color:var(--ui-ink);border:1px solid var(--ui-line);border-radius:8px;padding:10px}
+.foot{max-width:1100px;margin:16px auto 0;font-size:12px;color:var(--ui-muted)}
+/* Category Launcher · Templates 1.0 › Category Rail/Square Tiles · GEL tokens, theme hn */
+.hn-vcn {
+  /* GEL tokens (hn). The site has no GEL custom properties yet, so the block carries the ones it uses. */
+  --spacing-2xs: 8px; --spacing-xs: 12px; --spacing-sm: 16px; --spacing-md: 20px; --spacing-lg: 24px; --spacing-xl: 32px;
+  --radius-lg: 4px; --border-sm: 1px; --border-md: 2px;
+  --color-background-default: #ffffff; --color-background-tint: #f8f8f9;
+  --color-text-primary: #373737; --color-text-secondary: #686868; --color-sale: #cb1829; --color-border-secondary: #8d8d8d; --color-border-tertiary: #dde3e6;
+  --badge-availability-background-online-only: #ffffff; --badge-availability-label-online-only: #686868;
+  --badge-availability-background-customer-direct: #f2fafd; --badge-availability-label-customer-direct: #005b9c;
+  --spacing-3xs: 4px; --font-size-2xs: 10px; --font-weight-bold: 700;
+  --button-tertiary-background-default: #f3f4f5; --button-tertiary-label-default: #373737;
+  --button-state-hover: #00000033; --focus-ring-default: #00121f;
+  --font-family-foundation: "Albert Sans", Lato, sans-serif; --font-weight-extrabold: 800; --font-size-3xl: 24px; --line-height-3xl: 36px;
+  --font-family-utility: Lato, Arial, sans-serif; --font-size-xs: 12px; --line-height-xs: 14px; --font-size-sm: 14px; --line-height-md: 18px;
+  /* Not a GEL token yet: Figma's drop shadow on Button / Small (x 0, y 4, blur 4, 25% opacity) */
+  --hn-vcn-arrow-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  /* Room for the focus ring, which sits 2px outside the tile: 2px gap + 2px ring */
+  --hn-vcn-focus-room: calc(var(--border-md) * 2);
+  container-type: inline-size;
+  display: block;
+  /* 20 + the 4px focus room inside the list = the 24px (spacing-lg) above and below the tiles */
+  padding-block: var(--spacing-md);
+  background: var(--color-background-default);
+  font-family: var(--font-family-utility);
+}
+/* The block sets its own box model, so it renders the same whatever the page's CSS does */
+.hn-vcn, .hn-vcn *, .hn-vcn *::before, .hn-vcn *::after { box-sizing: border-box; }
+/* Component sizes from Figma: phone tiles 88, Square/Icons 112 (72px icon), Square/Images 134 (110px image) */
+.hn-vcn__frame { --hn-vcn-gutter: var(--spacing-sm); --hn-vcn-tile: 88px; --hn-vcn-arrow-top: 45px; }
+.hn-vcn .hn-vcn__viewport { position: relative; }
+.hn-vcn .hn-vcn__list {
+  display: flex; gap: var(--spacing-xs);
+  margin: 0; padding: var(--hn-vcn-focus-room) 0; list-style: none;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.hn-vcn .hn-vcn__list::-webkit-scrollbar { display: none; }
+.hn-vcn .hn-vcn__item { flex: 0 0 var(--hn-vcn-tile); margin: 0; padding: 0; scroll-snap-align: start; }
+.hn-vcn .hn-vcn__tile {
+  display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs);
+  color: var(--color-text-primary); text-decoration: none; -webkit-user-drag: none;
+}
+.hn-vcn .hn-vcn__media {
+  display: flex; align-items: center; justify-content: center;
+  width: 100%; aspect-ratio: 1 / 1; overflow: hidden;
+  /* 4px corners (radius-lg), as in Templates 1.0 › Visual Category Navigation 0.1 */
+  background: var(--color-background-tint); border-radius: var(--radius-lg);
+}
+/* Icons sit in a 60px box 26px inside a 112px tile (72 in a 134 circle), as in Visual Category Navigation 0.1: 23.2% scales it on phones */
+.hn-vcn .hn-vcn__media--icon { padding: 23.2%; }
+.hn-vcn .hn-vcn__media--icon svg { display: block; width: 100%; height: 100%; }
+.hn-vcn .hn-vcn__media--photo { padding: var(--spacing-2xs); }
+.hn-vcn .hn-vcn__media--art { background: none; }
+/* Two-product tiles: each photo placed by % of the tile, from the build */
+.hn-vcn .hn-vcn__media--multi { position: relative; }
+.hn-vcn .hn-vcn__media--multi .hn-vcn__photo { position: absolute; }
+/* The Sale, Bonus & Clearance tag sits on the tile's tint, as in Figma (the Black Friday art brings its own ground) */
+.hn-vcn .hn-vcn__item--promo .hn-vcn__media--art { background: var(--color-background-tint); }
+/* Concept 2, Visual Category Navigation 0.1: every tile is the same component. The 134px tile (tint, 4px corners) holds a
+   100 x 74 image container, centred, its bottom 29.5px above the tile's. Set in % so it scales with the tile (88px on phones).
+   Each category supplies one image for the container (a transparent 200 x 148 PNG, the container at 2x); an image of any
+   other size is fitted inside it, bottom-aligned, so the row stays consistent. */
+.hn-vcn .hn-vcn__media--product { position: relative; }
+.hn-vcn .hn-vcn__product {
+  position: absolute; left: 12.687%; bottom: 22.015%; width: 74.627%; height: 55.224%;
+  max-width: none; object-fit: contain; object-position: 50% 100%;
+}
+/* Hot Deals is labelled in the GEL sale colour */
+.hn-vcn .hn-vcn__item--sale .hn-vcn__label { color: var(--color-sale); }
+/* Promotions carry GEL Badge/Availability flags on the tile: FEATURED (Online Only style), NEW (Customer Direct style).
+   Top-left, 8px in, on squares; centred near the top on circles, where a corner would fall outside the circle. */
+.hn-vcn .hn-vcn__tile { position: relative; }
+.hn-vcn .hn-vcn__badge {
+  position: absolute; z-index: 1; left: var(--spacing-2xs); top: var(--spacing-2xs);
+  display: inline-flex; align-items: center; height: var(--spacing-lg); padding: 0 var(--spacing-3xs);
+  font-family: var(--font-family-utility); font-size: var(--font-size-2xs); line-height: 1; font-weight: var(--font-weight-bold);
+  letter-spacing: 0; text-transform: uppercase; white-space: nowrap; border-radius: var(--radius-lg); pointer-events: none;
+}
+.hn-vcn.hn-vcn--circle .hn-vcn__badge { left: 50%; top: calc(var(--hn-vcn-tile) * 0.1); transform: translateX(-50%); }
+.hn-vcn .hn-vcn__badge--featured { background: var(--badge-availability-background-online-only); color: var(--badge-availability-label-online-only); }
+.hn-vcn .hn-vcn__badge--new { background: var(--badge-availability-background-customer-direct); color: var(--badge-availability-label-customer-direct); font-family: var(--font-family-foundation); }
+/* Circles: Templates 1.0 › Category Rail, Shape=Circle. 134px circles on the tint, 12px gaps; icons take the same 23.2% inset */
+.hn-vcn.hn-vcn--circle .hn-vcn__media { border-radius: 50%; }
+/* Heading version: GEL Headline (hn/text-xl-hn-extrabold, Albert Sans 800, 24/36) on the content edge, 16px above the tiles */
+.hn-vcn .hn-vcn__heading {
+  margin: 0 0 var(--spacing-sm); padding: 0;
+  font-family: var(--font-family-foundation); font-weight: var(--font-weight-extrabold);
+  font-size: var(--font-size-3xl); line-height: var(--line-height-3xl); letter-spacing: 0; color: var(--color-text-primary);
+}
+.hn-vcn--full .hn-vcn__heading { padding-inline: var(--hn-vcn-gutter); }
+/* Black Friday: the SALE tag sits in each product tile's top-right corner (Templates 1.0, node 24626:12136) */
+.hn-vcn--deals .hn-vcn__media--photo { position: relative; }
+.hn-vcn .hn-vcn__tag { position: absolute; top: 3%; right: 0; width: 37.3%; height: auto; max-width: none; pointer-events: none; }
+.hn-vcn .hn-vcn__media--art img { display: block; width: 100%; height: 100%; max-width: none; }
+.hn-vcn .hn-vcn__photo { display: block; max-width: none; object-fit: contain; mix-blend-mode: multiply; }
+.hn-vcn .hn-vcn__media--todo {
+  padding: var(--spacing-2xs); border: var(--border-sm) dashed var(--color-border-secondary);
+  color: var(--color-text-secondary); font-size: var(--font-size-xs); line-height: var(--line-height-xs); text-align: center;
+}
+.hn-vcn .hn-vcn__label {
+  display: block; width: 100%;
+  font-size: var(--font-size-sm); line-height: var(--line-height-md); font-weight: 400; text-align: center;
+}
+.hn-vcn .hn-vcn__tile:hover .hn-vcn__label { text-decoration: underline; }
+/* Focus: a 2px ring with 2px of space between it and the tile */
+.hn-vcn .hn-vcn__tile:focus-visible { outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); border-radius: var(--radius-lg); }
+/* Arrows: GEL Button/Default Small, Tertiary, icon only, as in the Figma rail (grey fill, no border, drop shadow).
+   Desktop only; hidden at either end, like GEL pagination. */
+.hn-vcn .hn-vcn__arrow {
+  position: absolute; z-index: 1; top: calc(var(--hn-vcn-arrow-top) + var(--hn-vcn-focus-room));
+  display: none; align-items: center; justify-content: center;
+  width: 44px; height: 44px; min-width: 0; margin: 0; padding: 0; border: 0;
+  border-radius: var(--radius-lg);
+  background-color: var(--button-tertiary-background-default); color: var(--button-tertiary-label-default);
+  box-shadow: var(--hn-vcn-arrow-shadow); cursor: pointer; line-height: 0;
+}
+.hn-vcn .hn-vcn__arrow:hover { background-image: linear-gradient(var(--button-state-hover), var(--button-state-hover)); }
+.hn-vcn .hn-vcn__arrow:focus-visible { outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__arrow svg { display: block; width: 24px; height: 24px; fill: currentColor; }
+.hn-vcn .hn-vcn__arrow--prev svg { transform: scaleX(-1); }
+.hn-vcn.hn-vcn--dragging .hn-vcn__list { scroll-snap-type: none; cursor: grabbing; }
+.hn-vcn.hn-vcn--dragging .hn-vcn__tile { pointer-events: none; }
+/* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
+.hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
+.hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
+.hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-gutter); }
+.hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-gutter); }
+/* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
+.hn-vcn--container .hn-vcn__frame { max-width: 1440px; margin-inline: auto; padding-inline: var(--hn-vcn-gutter); }
+/* The list reaches 4px past the content edge only so a focused end tile's ring isn't cut off; the tiles still start on the edge */
+.hn-vcn--container .hn-vcn__list { margin-inline: calc(var(--hn-vcn-focus-room) * -1); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
+.hn-vcn--container .hn-vcn__arrow--prev { left: 0; }
+.hn-vcn--container .hn-vcn__arrow--next { right: 0; }
+/* Breakpoints follow the page container: gutter 16, then 24 from 640, then 32 from 1024 */
+@container (min-width: 640px) {
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-lg); }
+  .hn-vcn--icons .hn-vcn__frame { --hn-vcn-tile: 112px; }
+  .hn-vcn--images .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
+  .hn-vcn .hn-vcn__media--photo { padding: var(--spacing-xs); }
+}
+@container (min-width: 640px) {
+  .hn-vcn.hn-vcn--circle .hn-vcn__frame { --hn-vcn-tile: 134px; --hn-vcn-arrow-top: 47px; }
+}
+/* Skip link: hidden until it takes keyboard focus, then shown over the rail's top-left corner */
+.hn-vcn { position: relative; }
+.hn-vcn .hn-vcn__skip {
+  position: absolute; z-index: 2; left: var(--spacing-sm); top: var(--spacing-2xs);
+  padding: var(--spacing-2xs) var(--spacing-xs); border-radius: var(--radius-lg);
+  background: var(--color-background-default); color: var(--color-text-primary);
+  font: var(--font-weight-bold) var(--font-size-sm)/var(--line-height-md) var(--font-family-utility);
+  box-shadow: var(--hn-vcn-arrow-shadow); transform: translateY(-200%); opacity: 0; pointer-events: none;
+}
+.hn-vcn .hn-vcn__skip:focus { transform: none; opacity: 1; pointer-events: auto; outline: var(--border-md) solid var(--focus-ring-default); outline-offset: var(--border-md); }
+.hn-vcn .hn-vcn__end { display: block; height: 0; overflow: hidden; }
+.hn-vcn .hn-vcn__end:focus { outline: none; }
+/* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
+@media (hover: hover) and (pointer: fine) {
+  @container (min-width: 640px) {
+    .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+    .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+  }
+}
+/* Forced colours (Windows high contrast): the grey fills disappear, so the arrows and tiles keep an edge */
+@media (forced-colors: active) {
+  .hn-vcn .hn-vcn__arrow { border: var(--border-sm) solid ButtonText; }
+  .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
+}
+@container (min-width: 1024px) {
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); }
+  .hn-vcn .hn-vcn__arrow { display: inline-flex; }
+  .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
+}
+#frame .hn-vcn[hidden]{display:none}
+</style>
+</head>
+<body>
+<header class="bar">
+  <h1>Black Friday Launcher<small>Seasonal, in place of the Category Launcher for Black Friday · desktop and phone · capture 2 Nov 2026</small></h1>
+  <div class="switch" role="group" aria-label="Screen"><button type="button" data-screen="1440" aria-pressed="true">1440</button><button type="button" data-screen="1920" aria-pressed="false">1920</button><button type="button" data-screen="375" aria-pressed="false">Phone</button></div>
+  <p class="about"><span id="about"></span> <a class="history-link" href="index.html">← Category Launcher (everyday)</a> · <a class="history-link" href="history.html">Earlier Harvey Norman category navs</a></p>
+</header>
+<main class="stage">
+  <div class="frame" id="frame" data-screen="1440" style="width:1440px">
+    <img class="live" id="head" src="live-1440-head.jpg" data-k="1440" alt="The live harveynorman.com.au header, captured 2 November 2026" width="1440" height="110">
+    <img class="live" id="hero" src="live-1440-hero.jpg" alt="The live lead space (hero banner), captured 2 November 2026" width="1440" height="560">
+    <div id="rails">
+    <nav class="hn-vcn hn-vcn--images hn-vcn--deals hn-vcn--tiles hn-vcn--full" aria-label="Shop Black Friday deals by category" data-component="Black Friday Launcher" data-figma-component="Category Rail/Square Tiles" data-fs-element="Category Launcher" data-version="black-friday" data-concept="3" data-width="full">
+  <a class="hn-vcn__skip" href="#hn-vcn-end-3f">Skip categories</a>
+  <div class="hn-vcn__frame">
+    <div class="hn-vcn__viewport">
+      <button class="hn-vcn__arrow hn-vcn__arrow--prev" type="button" aria-controls="hn-vcn-list-3f" aria-label="Previous categories" data-gel-component="Button/Default Small" data-fs-element="Category Launcher Arrow" data-direction="previous" hidden><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
+      <ul class="hn-vcn__list" id="hn-vcn-list-3f" role="list">
+        <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday" draggable="false" data-fs-element="Category Launcher Tile" data-category="Top Black Friday Deals" data-position="1"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-bf-top-deals.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Top Black Friday Deals</span></a></li>
+        <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/computers-technology" draggable="false" data-fs-element="Category Launcher Tile" data-category="Computers &amp; Tech Black Friday Sale" data-position="2"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-bf-computers-tech.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Computers &amp; Tech Black Friday Sale</span></a></li>
+        <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/tv-audio" draggable="false" data-fs-element="Category Launcher Tile" data-category="TV &amp; Audio Black Friday Sale" data-position="3"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-bf-tv-audio.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">TV &amp; Audio Black Friday Sale</span></a></li>
+        <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/appliances" draggable="false" data-fs-element="Category Launcher Tile" data-category="Appliances Black Friday Sale" data-position="4"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-bf-appliances.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Appliances Black Friday Sale</span></a></li>
+        <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/health-beauty-grooming" draggable="false" data-fs-element="Category Launcher Tile" data-category="Health, Beauty &amp; Grooming Sale" data-position="5"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-bf-health-beauty.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Health, Beauty &amp; Grooming Sale</span></a></li>
+        <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/furniture-outdoor" draggable="false" data-fs-element="Category Launcher Tile" data-category="Furniture &amp; Outdoor Black Friday Sale" data-position="6"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-bf-furniture-outdoor.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Furniture &amp; Outdoor Black Friday Sale</span></a></li>
+        <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/bedroom-manchester" draggable="false" data-fs-element="Category Launcher Tile" data-category="Bedroom Black Friday Sale" data-position="7"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-bf-bedroom.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Bedroom Black Friday Sale</span></a></li>
+        <li class="hn-vcn__item"><a class="hn-vcn__tile" href="https://www.harveynorman.com.au/black-friday/bathrooms-flooring" draggable="false" data-fs-element="Category Launcher Tile" data-category="Bathrooms &amp; Flooring Black Friday" data-position="8"><span class="hn-vcn__media hn-vcn__media--art"><img src="img/vcn-bf-bathrooms-flooring.png" alt="" width="134" height="134" decoding="async" draggable="false"></span><span class="hn-vcn__label">Bathrooms &amp; Flooring Black Friday</span></a></li>
+      </ul>
+      <button class="hn-vcn__arrow hn-vcn__arrow--next" type="button" aria-controls="hn-vcn-list-3f" aria-label="Next categories" data-gel-component="Button/Default Small" data-fs-element="Category Launcher Arrow" data-direction="next"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.7 17.3C8.517 17.117 8.426 16.883 8.426 16.6C8.426 16.317 8.517 16.083 8.7 15.9L12.6 12L8.7 8.1C8.517 7.917 8.426 7.683 8.426 7.4C8.426 7.117 8.517 6.883 8.7 6.7C8.884 6.517 9.117 6.425 9.401 6.425C9.684 6.425 9.917 6.517 10.101 6.7L14.701 11.3C14.801 11.4 14.872 11.508 14.914 11.625C14.955 11.742 14.976 11.867 14.976 12C14.976 12.133 14.955 12.258 14.914 12.375C14.872 12.492 14.801 12.6 14.701 12.7L10.101 17.3C9.917 17.483 9.684 17.575 9.401 17.575C9.117 17.575 8.884 17.483 8.7 17.3Z"/></svg></button>
+    </div>
+  </div>
+  <span class="hn-vcn__end" id="hn-vcn-end-3f" tabindex="-1"></span>
+</nav>
+    </div>
+    <img class="live" id="rest" src="live-1440-rest.jpg" alt="The rest of the live homepage below the lead space: Click and Collect, promotions, featured products, brands and footer" width="1440" height="6900" loading="lazy">
+  </div>
+  <section class="dev" aria-labelledby="dev-h">
+    <h2 id="dev-h">For the developer</h2>
+    <p>Each file is one self-contained block (markup, scoped CSS and plain JavaScript, no jQuery) to paste into the CMS block straight after the lead space. The rail above is the same code with absolute links and local copies of the images.</p>
+    <div class="files">
+      <div class="file" data-file="concept-3-black-friday-full.html" data-key="3-full"><strong>full width of the lead space</strong><span>Black Friday · <code>cms/concept-3-black-friday-full.html</code></span><div><button type="button" data-copy="concept-3-black-friday-full.html">Copy code</button><button type="button" data-save="cms/concept-3-black-friday-full.html" hidden>Download</button></div></div>
+    </div>
+    <p style="margin-top:12px"><button type="button" class="zip" data-save="black-friday-launcher-cms.zip" hidden>Download everything (.zip)</button></p>
+    <div id="status" role="status" aria-live="polite"></div>
+    <textarea id="codebox" readonly aria-label="Code for the CMS block"></textarea>
+    <h3>Images to upload to <code>media/wysiwyg/visual-category-nav/</code></h3>
+    <p><code>vcn-bf-appliances.png</code>, <code>vcn-bf-bathrooms-flooring.png</code>, <code>vcn-bf-bedroom.png</code>, <code>vcn-bf-computers-tech.png</code>, <code>vcn-bf-furniture-outdoor.png</code>, <code>vcn-bf-health-beauty.png</code>, <code>vcn-bf-top-deals.png</code>, <code>vcn-bf-tv-audio.png</code>. They’re in the zip under <code>images/</code>.</p>
+    
+  </section>
+  <p class="foot">Concept mock-up for discussion, not the live site. Everything except the category rail is a capture of harveynorman.com.au on 2 November 2026. Rail: Templates 1.0 › Category Rail/Square Tiles with GEL icons and tokens (theme hn). The arrow’s drop shadow comes from Figma because the GEL has no shadow token yet.</p>
+</main>
+<script>
+(() => {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  document.querySelectorAll(".hn-vcn").forEach((nav) => {
+    if (nav.dataset.vcnReady) return;
+    nav.dataset.vcnReady = "1";
+    const list = nav.querySelector(".hn-vcn__list");
+    const prev = nav.querySelector(".hn-vcn__arrow--prev");
+    const next = nav.querySelector(".hn-vcn__arrow--next");
+    const update = () => {
+      const max = list.scrollWidth - list.clientWidth;
+      const atStart = list.scrollLeft <= 1, atEnd = list.scrollLeft >= max - 1;
+      if (atStart && document.activeElement === prev) next.focus();
+      if (atEnd && document.activeElement === next) prev.focus();
+      prev.hidden = atStart;
+      next.hidden = atEnd;
+    };
+    // An arrow moves the rail by every whole tile in view but one, so one tile stays for context.
+    let startX = 0, startLeft = 0, down = false, dragged = false;
+    const page = (dir) => {
+      const item = list.querySelector(".hn-vcn__item");
+      const step = item.offsetWidth + (parseFloat(getComputedStyle(list).columnGap) || 0);
+      const tiles = Math.max(1, Math.floor(list.clientWidth / step) - 1);
+      list.scrollBy({ left: dir * tiles * step, behavior: reduce.matches ? "auto" : "smooth" });
+    };
+    // Fullstory: named events for tiles, arrows and the first scroll, sent only when Fullstory is on the page
+    // (Browser API v2, FS("trackEvent"), or v1's FS.event). Fullstory also records the clicks themselves; the
+    // data-fs-element, data-category and data-position attributes give its element definitions stable selectors.
+    const track = (name, props) => {
+      const fs = window.FS;
+      if (typeof fs !== "function") return;
+      const properties = Object.assign({ version: nav.dataset.version || nav.dataset.concept }, props);
+      try { if (typeof fs.event === "function") fs.event(name, properties); else fs("trackEvent", { name, properties }); } catch (e) {}
+    };
+    // Skip link: move focus past the rail (browsers, Safari especially, don't always move focus to an in-page target)
+    const skip = nav.querySelector(".hn-vcn__skip"), end = nav.querySelector(".hn-vcn__end");
+    if (skip && end) skip.addEventListener("click", (e) => { e.preventDefault(); end.focus(); });
+    prev.addEventListener("click", () => { track("Category Launcher Arrow Clicked", { direction: "previous" }); page(-1); });
+    next.addEventListener("click", () => { track("Category Launcher Arrow Clicked", { direction: "next" }); page(1); });
+    list.addEventListener("click", (e) => {
+      const a = e.target.closest(".hn-vcn__tile");
+      if (a) track("Category Launcher Tile Clicked", { category: a.dataset.category, position: +a.dataset.position, href: a.getAttribute("href") });
+    });
+    let scrolled = false;
+    list.addEventListener("scroll", update, { passive: true });
+    list.addEventListener("scroll", () => {
+      if (scrolled) return;
+      scrolled = true; track("Category Launcher Scrolled", { method: down ? "drag" : "scroll" });
+    }, { passive: true });
+    // A tile that takes keyboard focus under an arrow, or past the rail's edge, is moved into view a whole tile at a time so the snap holds,
+    // and the focus ring is never covered (WCAG 2.4.11, and 2.4.12 where the rail allows).
+    list.addEventListener("focusin", (e) => {
+      const item = e.target.closest(".hn-vcn__item");
+      if (!item) return;
+      requestAnimationFrame(() => {
+        const step = item.offsetWidth + (parseFloat(getComputedStyle(list).columnGap) || 0);
+        for (let i = 0; i < 4; i++) {
+          const r = item.getBoundingClientRect(), v = list.getBoundingClientRect();
+          const hit = [prev, next].find((b) => { if (b.hidden || !b.offsetWidth) return false; const q = b.getBoundingClientRect(); return r.left < q.right && r.right > q.left; });
+          const dir = hit ? (hit === prev ? -1 : 1) : r.left < v.left - 1 ? -1 : r.right > v.right + 1 ? 1 : 0;
+          if (!dir) break;
+          list.scrollLeft += dir * step;
+          update();
+        }
+      });
+    });
+    if ("ResizeObserver" in window) new ResizeObserver(update).observe(list);
+    else window.addEventListener("resize", update);
+    // Drag to scroll with a mouse; touch and trackpads scroll natively. A drag never opens a tile.
+    startX = 0; startLeft = 0; down = false; dragged = false;
+    list.addEventListener("pointerdown", (e) => {
+      if (e.pointerType !== "mouse" || e.button !== 0) return;
+      down = true; dragged = false; startX = e.clientX; startLeft = list.scrollLeft;
+    });
+    list.addEventListener("pointermove", (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (!dragged && Math.abs(dx) > 5) { dragged = true; nav.classList.add("hn-vcn--dragging"); list.setPointerCapture(e.pointerId); }
+      if (dragged) list.scrollLeft = startLeft - dx;
+    });
+    const release = () => { down = false; nav.classList.remove("hn-vcn--dragging"); };
+    list.addEventListener("pointerup", release);
+    list.addEventListener("pointercancel", release);
+    list.addEventListener("click", (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
+    update();
+  });
+})();
+(() => {
+  const CAP = {"1440": [1440, 110, 560, 6900], "1920": [1920, 110, 560, 6916], "375": [375, 202, 375, 11367]};
+  const ABOUT = {"3": "The Black Friday Launcher, separate from the everyday Category Launcher: Lawrence\u2019s Peak Trade 2026 row from Templates 1.0, Top Black Friday Deals and then the seven department sale pages, each tile with his BLACK FRIDAY tag. For the event it replaces the Category Launcher in the same spot, straight after the lead space; the everyday row goes back afterwards."};
+  const state = { concept: "3", width: "full", shape: "square", place: "under", screen: window.innerWidth && window.innerWidth < 768 ? "375" : "1440" };
+  try { const h = new URLSearchParams(location.hash.slice(1)); ["concept", "width", "shape", "place", "screen"].forEach((k) => { if (h.get(k)) state[k] = h.get(k); }); } catch (e) {}
+  const frame = document.getElementById("frame"), head = document.getElementById("head"), hero = document.getElementById("hero"), rest = document.getElementById("rest"), rails = document.getElementById("rails");
+  // Scale the frame to fit. The viewer can run this before its frame has a width, so never scale to 0; refit when it gets one.
+  const stage = document.querySelector(".stage");
+  const fit = () => {
+    const w = +state.screen, avail = stage.clientWidth || document.documentElement.clientWidth;
+    if (!avail) return;
+    frame.style.zoom = w === 375 ? Math.min(1.25, avail / 375) : Math.min(1, avail / w);
+  };
+  if ("ResizeObserver" in window) new ResizeObserver(fit).observe(stage);
+  const render = () => {
+    const [w, hh, eh, rh] = CAP[state.screen];
+    frame.dataset.screen = state.screen; frame.style.width = w + "px";
+    if (head.dataset.k !== state.screen) {
+      const k = "live-" + state.screen;
+      head.src = k + "-head.jpg"; head.height = hh; hero.src = k + "-hero.jpg"; hero.height = eh; rest.src = k + "-rest.jpg"; rest.height = rh;
+      head.width = hero.width = rest.width = w; head.dataset.k = state.screen;
+    }
+    // Placement: the same block, pasted before the lead space instead of after it
+    frame.insertBefore(rails, state.place === "above" ? hero : rest);
+    // Circles apply to concepts 1 and 2; the Black Friday versions follow their square Figma reference
+    state.concept = "3";  // one launcher per page
+    const shown = state.concept;
+    document.querySelectorAll("#frame .hn-vcn").forEach((n) => { n.hidden = !(n.dataset.concept === shown && n.dataset.width === state.width); });
+    document.querySelectorAll(".switch button").forEach((b) => { const k = Object.keys(b.dataset)[0]; b.setAttribute("aria-pressed", String(b.dataset[k] === state[k])); });
+    document.querySelectorAll(".file").forEach((f) => f.toggleAttribute("data-current", f.dataset.key === shown + "-" + state.width));
+    document.getElementById("about").textContent = ABOUT[state.concept];
+    try { history.replaceState(null, "", "#" + new URLSearchParams(state).toString()); } catch (e) {}
+    fit();
+  };
+  document.querySelectorAll(".switch button").forEach((b) => b.addEventListener("click", () => { const k = Object.keys(b.dataset)[0]; state[k] = b.dataset[k]; render(); }));
+  addEventListener("resize", fit);
+  const status = document.getElementById("status"), box = document.getElementById("codebox");
+  document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
+    try {
+      const text = await (await fetch("cms/" + b.dataset.copy)).text();
+      box.value = text; box.style.display = "block";
+      try { await navigator.clipboard.writeText(text); status.textContent = "Copied " + b.dataset.copy + " (" + Math.round(text.length / 1024) + " KB)."; }
+      catch (e) { box.focus(); box.select(); status.textContent = "Your browser blocked the clipboard, so the code is selected below. Press Ctrl+C or Cmd+C."; }
+    } catch (e) { status.textContent = "Couldn’t load the file. Use Download instead."; }
+  }));
+  // The developer's zip is built here from the files the page serves (stored, not compressed).
+  const ZIP = {"name": "black-friday-launcher-cms.zip", "root": "black-friday-launcher/", "readme": "Black Friday Launcher: CMS block (concept for review, 5 Nov 2026)\nDesign: Lawrence's Peak Trade 2026 row, in Templates 1.0 > Visual Category Navigation 0.1 (frame Category Rail,\nnode 26738:39271). GEL tokens, theme hn. Separate from the everyday Category Launcher.\n\n  concept-3-black-friday-full.html   Top Black Friday Deals, then the seven department Black Friday sale pages\n\n1. Upload the files in images/ to media/wysiwyg/visual-category-nav/.\n2. For the event, paste this block in place of the Category Launcher block (straight after the lead space, the\n   .hn-slider div). Put the Category Launcher back when Black Friday ends.\nEach tile is one 268 x 268 PNG (the 134px tile at 2x, tag included): to change one, upload a new image under the same\nname. Nothing else is needed: no jQuery, no site CSS.\n", "files": ["cms/concept-3-black-friday-full.html", "cms/images/vcn-bf-appliances.png", "cms/images/vcn-bf-bathrooms-flooring.png", "cms/images/vcn-bf-bedroom.png", "cms/images/vcn-bf-computers-tech.png", "cms/images/vcn-bf-furniture-outdoor.png", "cms/images/vcn-bf-health-beauty.png", "cms/images/vcn-bf-top-deals.png", "cms/images/vcn-bf-tv-audio.png"]};
+  const crcTable = Array.from({ length: 256 }, (_, n) => { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; });
+  const crc32 = (u8) => { let c = 0xffffffff; for (let i = 0; i < u8.length; i++) c = crcTable[(c ^ u8[i]) & 0xff] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
+  const makeZip = async () => {
+    const enc = new TextEncoder(), entries = [{ name: "README.txt", data: enc.encode(ZIP.readme) }];
+    for (const path of ZIP.files) entries.push({ name: path.replace(/^cms\//, ""), data: new Uint8Array(await (await fetch(path)).arrayBuffer()) });
+    const parts = [], central = []; let offset = 0;
+    for (const e of entries) {
+      const name = enc.encode(ZIP.root + e.name), crc = crc32(e.data), size = e.data.length;
+      const local = new DataView(new ArrayBuffer(30));
+      [[0, 0x04034b50, 4], [4, 20, 2], [6, 0x0800, 2], [8, 0, 2], [10, 0, 2], [12, 0x5a21, 2], [14, crc, 4], [18, size, 4], [22, size, 4], [26, name.length, 2], [28, 0, 2]]
+        .forEach(([o, v, n]) => (n === 4 ? local.setUint32(o, v, true) : local.setUint16(o, v, true)));
+      const dir = new DataView(new ArrayBuffer(46));
+      [[0, 0x02014b50, 4], [4, 20, 2], [6, 20, 2], [8, 0x0800, 2], [10, 0, 2], [12, 0, 2], [14, 0x5a21, 2], [16, crc, 4], [20, size, 4], [24, size, 4], [28, name.length, 2], [30, 0, 2], [32, 0, 2], [34, 0, 2], [36, 0, 2], [38, 0, 4], [42, offset, 4]]
+        .forEach(([o, v, n]) => (n === 4 ? dir.setUint32(o, v, true) : dir.setUint16(o, v, true)));
+      parts.push(local, name, e.data); central.push(dir, name);
+      offset += 30 + name.length + size;
+    }
+    const cdSize = central.reduce((s, p) => s + p.byteLength, 0), end = new DataView(new ArrayBuffer(22));
+    [[0, 0x06054b50, 4], [4, 0, 2], [6, 0, 2], [8, entries.length, 2], [10, entries.length, 2], [12, cdSize, 4], [16, offset, 4], [20, 0, 2]]
+      .forEach(([o, v, n]) => (n === 4 ? end.setUint32(o, v, true) : end.setUint16(o, v, true)));
+    return new Blob([...parts, ...central, end], { type: "application/zip" });
+  };
+  // Downloads go through the Claude viewer when the page is opened there (it asks before saving; without that permission the
+  // buttons stay hidden); on any other host they're ordinary browser downloads.
+  const inClaude = !!(window.claude && window.claude.use);
+  (inClaude ? window.claude.use("downloads") : Promise.resolve({
+    save: ({ filename, data }) => { const a = document.createElement("a"); a.href = URL.createObjectURL(data); a.download = filename; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000); return Promise.resolve(); }
+  })).then((downloads) => {
+    if (!downloads) return;
+    document.querySelectorAll("[data-save]").forEach((b) => {
+      b.hidden = false;
+      b.addEventListener("click", async () => {
+        try {
+          const blob = b.dataset.save === ZIP.name ? await makeZip() : await (await fetch(b.dataset.save)).blob();
+          await downloads.save({ filename: b.dataset.save.split("/").pop(), data: blob });
+          status.textContent = "Saved " + b.dataset.save.split("/").pop() + ".";
+        } catch (e) {
+          if (e && e.code === "declined") status.textContent = "";
+          else if (e && e.code === "rate_limited") status.textContent = "A save is already open. Finish that one first.";
+          else status.textContent = "This view can’t save files. Use Copy code instead.";
+        }
+      });
+    });
+  }).catch(() => {});
+  render();
+})();
+</script>
+
+</body>
+</html>
