@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
 @media (hover: hover) and (pointer: fine) {
   @container (min-width: 640px) {
     .hn-vcn__frame { --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-    .hn-vcn--full .hn-vcn__list { margin-inline: calc(var(--hn-vcn-edge) - var(--hn-vcn-focus-room)); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
+    .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
     .hn-vcn .hn-vcn__arrow { display: inline-flex; }
     .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
   }
@@ -268,10 +268,10 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 @container (min-width: 1024px) {
   .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-  /* Wherever the arrows can show, the row runs between them, not under them: it starts and is clipped 12px inside each arrow
-     (88px from the edge from 1024, 64px on mid-size screens with a mouse). It reaches 4px further only so a focused end
-     tile's ring isn't cut off. Touch screens keep the row running to the screen edge. */
-  .hn-vcn--full .hn-vcn__list { margin-inline: calc(var(--hn-vcn-edge) - var(--hn-vcn-focus-room)); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
+  /* Wherever the arrows can show, the tiles come to rest 12px after each arrow (88px from the edge from 1024, 64px on
+     mid-size screens with a mouse), so an arrow never sits on a tile at rest; the row still scrolls under the arrows to
+     the screen edge. */
+  .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
@@ -565,7 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
 @media (hover: hover) and (pointer: fine) {
   @container (min-width: 640px) {
     .hn-vcn__frame { --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-    .hn-vcn--full .hn-vcn__list { margin-inline: calc(var(--hn-vcn-edge) - var(--hn-vcn-focus-room)); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
+    .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
     .hn-vcn .hn-vcn__arrow { display: inline-flex; }
     .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
   }
@@ -577,10 +577,10 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 @container (min-width: 1024px) {
   .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-  /* Wherever the arrows can show, the row runs between them, not under them: it starts and is clipped 12px inside each arrow
-     (88px from the edge from 1024, 64px on mid-size screens with a mouse). It reaches 4px further only so a focused end
-     tile's ring isn't cut off. Touch screens keep the row running to the screen edge. */
-  .hn-vcn--full .hn-vcn__list { margin-inline: calc(var(--hn-vcn-edge) - var(--hn-vcn-focus-room)); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
+  /* Wherever the arrows can show, the tiles come to rest 12px after each arrow (88px from the edge from 1024, 64px on
+     mid-size screens with a mouse), so an arrow never sits on a tile at rest; the row still scrolls under the arrows to
+     the screen edge. */
+  .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
@@ -901,7 +901,7 @@ document.addEventListener("DOMContentLoaded", () => {
 @media (hover: hover) and (pointer: fine) {
   @container (min-width: 640px) {
     .hn-vcn__frame { --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-    .hn-vcn--full .hn-vcn__list { margin-inline: calc(var(--hn-vcn-edge) - var(--hn-vcn-focus-room)); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
+    .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
     .hn-vcn .hn-vcn__arrow { display: inline-flex; }
     .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
   }
@@ -913,10 +913,10 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 @container (min-width: 1024px) {
   .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-  /* Wherever the arrows can show, the row runs between them, not under them: it starts and is clipped 12px inside each arrow
-     (88px from the edge from 1024, 64px on mid-size screens with a mouse). It reaches 4px further only so a focused end
-     tile&#x27;s ring isn&#x27;t cut off. Touch screens keep the row running to the screen edge. */
-  .hn-vcn--full .hn-vcn__list { margin-inline: calc(var(--hn-vcn-edge) - var(--hn-vcn-focus-room)); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
+  /* Wherever the arrows can show, the tiles come to rest 12px after each arrow (88px from the edge from 1024, 64px on
+     mid-size screens with a mouse), so an arrow never sits on a tile at rest; the row still scrolls under the arrows to
+     the screen edge. */
+  .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
