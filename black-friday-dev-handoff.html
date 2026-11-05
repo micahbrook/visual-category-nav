@@ -271,10 +271,9 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-  /* Wherever the arrows can show, the tiles come to rest 12px after each arrow (88px from the edge from 1024, 64px on
-     mid-size screens with a mouse), so an arrow never sits on a tile at rest; the row still scrolls under the arrows to
-     the screen edge. */
+  /* Desktop (Lawrence, 6 Nov): the tiles start and end on the 32px page gutter (spacing-xl), like the sections below, and
+     the arrows sit 32px in, over the end tiles. On mid-size screens with a mouse they still rest 12px after each arrow (64px). */
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: var(--hn-vcn-gutter); }
   .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
@@ -584,10 +583,9 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-  /* Wherever the arrows can show, the tiles come to rest 12px after each arrow (88px from the edge from 1024, 64px on
-     mid-size screens with a mouse), so an arrow never sits on a tile at rest; the row still scrolls under the arrows to
-     the screen edge. */
+  /* Desktop (Lawrence, 6 Nov): the tiles start and end on the 32px page gutter (spacing-xl), like the sections below, and
+     the arrows sit 32px in, over the end tiles. On mid-size screens with a mouse they still rest 12px after each arrow (64px). */
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: var(--hn-vcn-gutter); }
   .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
@@ -924,10 +922,9 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
-  /* Wherever the arrows can show, the tiles come to rest 12px after each arrow (88px from the edge from 1024, 64px on
-     mid-size screens with a mouse), so an arrow never sits on a tile at rest; the row still scrolls under the arrows to
-     the screen edge. */
+  /* Desktop (Lawrence, 6 Nov): the tiles start and end on the 32px page gutter (spacing-xl), like the sections below, and
+     the arrows sit 32px in, over the end tiles. On mid-size screens with a mouse they still rest 12px after each arrow (64px). */
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: var(--hn-vcn-gutter); }
   .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-edge); scroll-padding-inline: var(--hn-vcn-edge); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
