@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
   </header>
   <section class="card" aria-labelledby="h-a11y">
     <h2 id="h-a11y">Accessibility, tested 5 November 2026</h2>
-    <p>This block passes axe-core (WCAG 2.2 A and AA rules) at 375, 768, 1024, 1440 and 1920px. These checks cover what automated tools miss:</p>
+    <p>This block passes axe-core (WCAG 2.2 A and AA rules) at the six GEL breakpoints, 320, 375, 768, 1024, 1440 and 2560px (rerun 6 November). These checks cover what automated tools miss:</p>
     <ul class="steps">
       <li><strong>Screen readers (VoiceOver, NVDA, TalkBack).</strong> The rail is a navigation landmark, “Shop Black Friday deals by category”, holding a list of 8 links, each named by its label (“Top Black Friday Deals”, “TV &amp; Audio Black Friday Sale” and so on). Tile pictures are decorative (<code>alt=""</code>) so the label isn’t read twice. <code>role="list"</code> keeps the list announced in Safari, which otherwise drops it when bullets are removed.</li>
       <li><strong>Keyboard only.</strong> The first Tab stop is a “Skip categories” link that appears on focus and jumps past the rail. Every tile and arrow shows a 2px focus ring 2px outside it. A tile that takes focus under an arrow, or past the rail’s edge, scrolls fully into view.</li>
@@ -134,6 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 .hn-vcn .hn-vcn__list::-webkit-scrollbar { display: none; }
 .hn-vcn .hn-vcn__item { flex: 0 0 var(--hn-vcn-tile); margin: 0; padding: 0; scroll-snap-align: start; }
+/* When every tile fits (Black Friday's 8 tiles on a desktop), the row is centred under the lead space; when they don't, it
+   starts on the left and scrolls. The auto margins only take spare room, so they're 0 as soon as the row overflows. */
+.hn-vcn .hn-vcn__item:first-child { margin-inline-start: auto; }
+.hn-vcn .hn-vcn__item:last-child { margin-inline-end: auto; }
 .hn-vcn .hn-vcn__tile {
   display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs);
   color: var(--color-text-primary); text-decoration: none; -webkit-user-drag: none;
@@ -443,6 +447,10 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 .hn-vcn .hn-vcn__list::-webkit-scrollbar { display: none; }
 .hn-vcn .hn-vcn__item { flex: 0 0 var(--hn-vcn-tile); margin: 0; padding: 0; scroll-snap-align: start; }
+/* When every tile fits (Black Friday's 8 tiles on a desktop), the row is centred under the lead space; when they don't, it
+   starts on the left and scrolls. The auto margins only take spare room, so they're 0 as soon as the row overflows. */
+.hn-vcn .hn-vcn__item:first-child { margin-inline-start: auto; }
+.hn-vcn .hn-vcn__item:last-child { margin-inline-end: auto; }
 .hn-vcn .hn-vcn__tile {
   display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs);
   color: var(--color-text-primary); text-decoration: none; -webkit-user-drag: none;
@@ -779,6 +787,10 @@ document.addEventListener("DOMContentLoaded", () => {
 }
 .hn-vcn .hn-vcn__list::-webkit-scrollbar { display: none; }
 .hn-vcn .hn-vcn__item { flex: 0 0 var(--hn-vcn-tile); margin: 0; padding: 0; scroll-snap-align: start; }
+/* When every tile fits (Black Friday&#x27;s 8 tiles on a desktop), the row is centred under the lead space; when they don&#x27;t, it
+   starts on the left and scrolls. The auto margins only take spare room, so they&#x27;re 0 as soon as the row overflows. */
+.hn-vcn .hn-vcn__item:first-child { margin-inline-start: auto; }
+.hn-vcn .hn-vcn__item:last-child { margin-inline-end: auto; }
 .hn-vcn .hn-vcn__tile {
   display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs);
   color: var(--color-text-primary); text-decoration: none; -webkit-user-drag: none;

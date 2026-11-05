@@ -24,7 +24,7 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
 .history-link{color:var(--ui-accent);font-weight:700;white-space:nowrap}
 .stage{padding-top:16px}
 .frame{background:#fff;margin:0 auto;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.12),0 8px 32px rgba(0,0,0,.10)}
-.frame[data-screen="375"]{border-radius:28px}
+.frame[data-screen="320"],.frame[data-screen="375"]{border-radius:28px}
 .live{display:block;width:100%;height:auto}
 .dev{max-width:1100px;margin:28px auto 0;background:var(--ui-bar);border:1px solid var(--ui-line);border-radius:12px;padding:20px}
 .dev h2{margin:0 0 4px;font:700 18px/1.25 "Albert Sans",Arial,sans-serif}
@@ -79,6 +79,10 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
 }
 .hn-vcn .hn-vcn__list::-webkit-scrollbar { display: none; }
 .hn-vcn .hn-vcn__item { flex: 0 0 var(--hn-vcn-tile); margin: 0; padding: 0; scroll-snap-align: start; }
+/* When every tile fits (Black Friday's 8 tiles on a desktop), the row is centred under the lead space; when they don't, it
+   starts on the left and scrolls. The auto margins only take spare room, so they're 0 as soon as the row overflows. */
+.hn-vcn .hn-vcn__item:first-child { margin-inline-start: auto; }
+.hn-vcn .hn-vcn__item:last-child { margin-inline-end: auto; }
 .hn-vcn .hn-vcn__tile {
   display: flex; flex-direction: column; align-items: center; gap: var(--spacing-xs);
   color: var(--color-text-primary); text-decoration: none; -webkit-user-drag: none;
@@ -225,14 +229,14 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
 </head>
 <body>
 <header class="bar">
-  <h1>Black Friday Launcher<small>Seasonal, in place of the Category Launcher for Black Friday · desktop and phone · capture 2 Nov 2026</small></h1>
-  <div class="switch" role="group" aria-label="Screen"><button type="button" data-screen="1440" aria-pressed="true">1440</button><button type="button" data-screen="1920" aria-pressed="false">1920</button><button type="button" data-screen="375" aria-pressed="false">Phone</button></div>
+  <h1>Black Friday Launcher<small>Seasonal, in place of the Category Launcher for Black Friday · at every GEL breakpoint · capture 6 Nov 2026</small></h1>
+  <div class="switch" role="group" aria-label="Screen (GEL breakpoints)"><button type="button" data-screen="320" aria-pressed="true">320 · Small mobile</button><button type="button" data-screen="375" aria-pressed="false">375 · Mobile</button><button type="button" data-screen="768" aria-pressed="false">768 · Tablet</button><button type="button" data-screen="1024" aria-pressed="false">1024 · Small desktop</button><button type="button" data-screen="1440" aria-pressed="false">1440 · Desktop</button><button type="button" data-screen="2560" aria-pressed="false">2560 · Monitor</button></div>
   <p class="about"><span id="about"></span> <a class="history-link" href="index.html">← Category Launcher (everyday)</a> · <a class="history-link" href="history.html">Earlier Harvey Norman category navs</a></p>
 </header>
 <main class="stage">
   <div class="frame" id="frame" data-screen="1440" style="width:1440px">
-    <img class="live" id="head" src="live-1440-head.jpg" data-k="1440" alt="The live harveynorman.com.au header, captured 2 November 2026" width="1440" height="110">
-    <img class="live" id="hero" src="live-1440-hero.jpg" alt="The live lead space (hero banner), captured 2 November 2026" width="1440" height="560">
+    <img class="live" id="head" src="live-1440-head.jpg" data-k="1440" alt="The live harveynorman.com.au header, captured 6 November 2026" width="1440" height="110">
+    <img class="live" id="hero" src="live-1440-hero.jpg" alt="The live lead space (hero banner), captured 6 November 2026" width="1440" height="560">
     <div id="rails">
     <nav class="hn-vcn hn-vcn--images hn-vcn--deals hn-vcn--tiles hn-vcn--full" aria-label="Shop Black Friday deals by category" data-component="Black Friday Launcher" data-figma-component="Category Rail/Square Tiles" data-fs-element="Category Launcher" data-version="black-friday" data-concept="3" data-width="full">
   <a class="hn-vcn__skip" href="#hn-vcn-end-3f">Skip categories</a>
@@ -255,7 +259,7 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
   <span class="hn-vcn__end" id="hn-vcn-end-3f" tabindex="-1"></span>
 </nav>
     </div>
-    <img class="live" id="rest" src="live-1440-rest.jpg" alt="The rest of the live homepage below the lead space: Click and Collect, promotions, featured products, brands and footer" width="1440" height="6900" loading="lazy">
+    <img class="live" id="rest" src="live-1440-rest.jpg" alt="The rest of the live homepage below the lead space: Click and Collect, promotions, featured products, brands and footer" width="1440" height="7313" loading="lazy">
   </div>
   <section class="dev" aria-labelledby="dev-h">
     <h2 id="dev-h">For the developer</h2>
@@ -270,7 +274,7 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
     <p><code>vcn-bf-appliances.png</code>, <code>vcn-bf-bathrooms-flooring.png</code>, <code>vcn-bf-bedroom.png</code>, <code>vcn-bf-computers-tech.png</code>, <code>vcn-bf-furniture-outdoor.png</code>, <code>vcn-bf-health-beauty.png</code>, <code>vcn-bf-top-deals.png</code>, <code>vcn-bf-tv-audio.png</code>. They’re in the zip under <code>images/</code>.</p>
     
   </section>
-  <p class="foot">Concept mock-up for discussion, not the live site. Everything except the category rail is a capture of harveynorman.com.au on 2 November 2026. Rail: Templates 1.0 › Category Rail/Square Tiles with GEL icons and tokens (theme hn). The arrow’s drop shadow comes from Figma because the GEL has no shadow token yet.</p>
+  <p class="foot">Concept mock-up for discussion, not the live site. Everything except the category rail is a capture of harveynorman.com.au on 6 November 2026, at the GEL breakpoints. Rail: Templates 1.0 › Category Rail/Square Tiles with GEL icons and tokens (theme hn). The arrow’s drop shadow comes from Figma because the GEL has no shadow token yet.</p>
 </main>
 <script>
 (() => {
@@ -378,7 +382,7 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
   if ("MutationObserver" in window) new MutationObserver(() => { if (!queued) { queued = true; requestAnimationFrame(scan); } }).observe(document.documentElement, { childList: true, subtree: true });
 })();
 (() => {
-  const CAP = {"1440": [1440, 110, 560, 6900], "1920": [1920, 110, 560, 6916], "375": [375, 202, 375, 11367]};
+  const CAP = {"320": [320, 202, 375, 22524], "375": [375, 202, 375, 12661], "768": [768, 202, 375, 8776], "1024": [1024, 110, 560, 6680], "1440": [1440, 110, 560, 7313], "2560": [2560, 110, 560, 7313]};
   const ABOUT = {"3": "The Black Friday Launcher, separate from the everyday Category Launcher: Lawrence\u2019s Peak Trade 2026 row from Templates 1.0, Top Black Friday Deals and then the seven department sale pages, each tile with his BLACK FRIDAY tag. For the event it replaces the Category Launcher in the same spot, straight after the lead space; the everyday row goes back afterwards."};
   const state = { concept: "3", width: "full", shape: "square", place: "under", screen: window.innerWidth && window.innerWidth < 768 ? "375" : "1440" };
   try { const h = new URLSearchParams(location.hash.slice(1)); ["concept", "width", "shape", "place", "screen"].forEach((k) => { if (h.get(k)) state[k] = h.get(k); }); } catch (e) {}
@@ -388,7 +392,7 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
   const fit = () => {
     const w = +state.screen, avail = stage.clientWidth || document.documentElement.clientWidth;
     if (!avail) return;
-    frame.style.zoom = w === 375 ? Math.min(1.25, avail / 375) : Math.min(1, avail / w);
+    frame.style.zoom = w < 768 ? Math.min(1.25, avail / w) : Math.min(1, avail / w);
   };
   if ("ResizeObserver" in window) new ResizeObserver(fit).observe(stage);
   const render = () => {
