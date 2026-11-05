@@ -9,6 +9,10 @@
   current .visual-nav markup, its <style> and its jQuery drag-scroll <script>. Remove the second copy in the
   what-is-on-banner block too.
   NEEDS: nothing else. No jQuery, no site CSS. Markup, a scoped <style> and a vanilla <script> that is safe to paste once per page.
+  IF THE ARROWS OR MOUSE-DRAG DON'T WORK: the CMS isn't running the <script> at the end (touch scrolling works without it).
+  Check in the browser console: document.querySelector(".hn-vcn").dataset.vcnReady is "1" when the script has run.
+  If it isn't, upload category-launcher.js to media/wysiwyg/visual-category-nav/ and replace the whole <script>...</script>
+  below with: <script src="/media/wysiwyg/visual-category-nav/category-launcher.js" defer></script>
   BEFORE IT GOES LIVE:
   - Upload vcn-category-kitchen.png, vcn-category-furniture.png, vcn-category-computers.png, vcn-category-phones.png, vcn-category-vacuum.png, vcn-category-tv.png, vcn-category-beds.png, vcn-category-heating.png, vcn-category-health.png, vcn-category-games.png, vcn-category-cameras.png, vcn-category-headphones.png, vcn-category-bathroom.png, vcn-category-connected.png, vcn-category-carpet.png, vcn-category-toys.png, vcn-category-car.png, vcn-category-gift.png, vcn-category-sale.png to media/wysiwyg/visual-category-nav/ (the src URLs below already point there).
   - Every tile is the same component: a link, one image and a label. The image sits in the 100 x 74 image container
@@ -181,7 +185,7 @@
 /* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
 .hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
 .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
-/* Arrows sit inside the rail's edges: 8px in on mid-size screens, 32px (spacing-xl, the page gutter) from 1024 */
+/* Arrows sit inside the rail's edges: 8px in on mid-size screens, 32px (spacing-xl, the page gutter) from 1024, beside the tiles */
 .hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-arrow-inset); }
 .hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-arrow-inset); }
 /* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
@@ -215,6 +219,8 @@
 /* Mouse users get the arrows from 640px too, so the rail never needs dragging (WCAG 2.5.7); touch screens scroll natively */
 @media (hover: hover) and (pointer: fine) {
   @container (min-width: 640px) {
+    .hn-vcn__frame { --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
+    .hn-vcn--full .hn-vcn__list { margin-inline: calc(var(--hn-vcn-edge) - var(--hn-vcn-focus-room)); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
     .hn-vcn .hn-vcn__arrow { display: inline-flex; }
     .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
   }
@@ -225,20 +231,27 @@
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); }
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xl); --hn-vcn-edge: calc(var(--hn-vcn-arrow-inset) + 44px + var(--spacing-xs)); }
+  /* Wherever the arrows can show, the row runs between them, not under them: it starts and is clipped 12px inside each arrow
+     (88px from the edge from 1024, 64px on mid-size screens with a mouse). It reaches 4px further only so a focused end
+     tile's ring isn't cut off. Touch screens keep the row running to the screen edge. */
+  .hn-vcn--full .hn-vcn__list { margin-inline: calc(var(--hn-vcn-edge) - var(--hn-vcn-focus-room)); padding-inline: var(--hn-vcn-focus-room); scroll-padding-inline: var(--hn-vcn-focus-room); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
 </style>
 <script>
 (() => {
+  /* Safe to load more than once, and before or after the markup: it sets up every .hn-vcn on the page that isn't set up yet,
+     straight away, when the page has loaded, and whenever one is added later. window.hnVcnInit() does the same by hand. */
+  if (window.hnVcnInit) { window.hnVcnInit(); return; }
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-  document.querySelectorAll(".hn-vcn").forEach((nav) => {
-    if (nav.dataset.vcnReady) return;
-    nav.dataset.vcnReady = "1";
+  const init = (nav) => {
     const list = nav.querySelector(".hn-vcn__list");
     const prev = nav.querySelector(".hn-vcn__arrow--prev");
     const next = nav.querySelector(".hn-vcn__arrow--next");
+    if (nav.dataset.vcnReady || !list || !prev || !next) return;
+    nav.dataset.vcnReady = "1";
     const update = () => {
       const max = list.scrollWidth - list.clientWidth;
       const atStart = list.scrollLeft <= 1, atEnd = list.scrollLeft >= max - 1;
@@ -247,8 +260,8 @@
       prev.hidden = atStart;
       next.hidden = atEnd;
     };
-    // An arrow pages by every whole tile in view but one, so one tile stays for context. The stops are fixed (the start, one page,
-    // two pages … then the end) and each is a tile edge, so the rail always lands on a whole tile and Back retraces Next exactly.
+    /* An arrow pages by every whole tile in view but one, so one tile stays for context. The stops are fixed (the start, one page, */
+    /* two pages … then the end) and each is a tile edge, so the rail always lands on a whole tile and Back retraces Next exactly. */
     let startX = 0, startLeft = 0, down = false, dragged = false;
     const page = (dir) => {
       const cs = getComputedStyle(list), item = list.querySelector(".hn-vcn__item");
@@ -261,16 +274,16 @@
       const to = dir > 0 ? stops.find((x) => x > at + 1) : stops.reverse().find((x) => x < at - 1);
       if (to !== undefined) list.scrollTo({ left: to, behavior: reduce.matches ? "auto" : "smooth" });
     };
-    // Fullstory: named events for tiles, arrows and the first scroll, sent only when Fullstory is on the page
-    // (Browser API v2, FS("trackEvent"), or v1's FS.event). Fullstory also records the clicks themselves; the
-    // data-fs-element, data-category and data-position attributes give its element definitions stable selectors.
+    /* Fullstory: named events for tiles, arrows and the first scroll, sent only when Fullstory is on the page */
+    /* (Browser API v2, FS("trackEvent"), or v1's FS.event). Fullstory also records the clicks themselves; the */
+    /* data-fs-element, data-category and data-position attributes give its element definitions stable selectors. */
     const track = (name, props) => {
       const fs = window.FS;
       if (typeof fs !== "function") return;
       const properties = Object.assign({ version: nav.dataset.version || nav.dataset.concept }, props);
       try { if (typeof fs.event === "function") fs.event(name, properties); else fs("trackEvent", { name, properties }); } catch (e) {}
     };
-    // Skip link: move focus past the rail (browsers, Safari especially, don't always move focus to an in-page target)
+    /* Skip link: move focus past the rail (browsers, Safari especially, don't always move focus to an in-page target) */
     const skip = nav.querySelector(".hn-vcn__skip"), end = nav.querySelector(".hn-vcn__end");
     if (skip && end) skip.addEventListener("click", (e) => { e.preventDefault(); end.focus(); });
     prev.addEventListener("click", () => { track("Category Launcher Arrow Clicked", { direction: "previous" }); page(-1); });
@@ -285,8 +298,8 @@
       if (scrolled) return;
       scrolled = true; track("Category Launcher Scrolled", { method: down ? "drag" : "scroll" });
     }, { passive: true });
-    // A tile that takes keyboard focus under an arrow, or past the rail's edge, is moved into view a whole tile at a time so the snap holds,
-    // and the focus ring is never covered (WCAG 2.4.11, and 2.4.12 where the rail allows).
+    /* A tile that takes keyboard focus under an arrow, or past the rail's edge, is moved into view a whole tile at a time so the snap holds, */
+    /* and the focus ring is never covered (WCAG 2.4.11, and 2.4.12 where the rail allows). */
     list.addEventListener("focusin", (e) => {
       const item = e.target.closest(".hn-vcn__item");
       if (!item) return;
@@ -304,7 +317,7 @@
     });
     if ("ResizeObserver" in window) new ResizeObserver(update).observe(list);
     else window.addEventListener("resize", update);
-    // Drag to scroll with a mouse; touch and trackpads scroll natively. A drag never opens a tile.
+    /* Drag to scroll with a mouse; touch and trackpads scroll natively. A drag never opens a tile. */
     startX = 0; startLeft = 0; down = false; dragged = false;
     list.addEventListener("pointerdown", (e) => {
       if (e.pointerType !== "mouse" || e.button !== 0) return;
@@ -319,8 +332,17 @@
     const release = () => { down = false; nav.classList.remove("hn-vcn--dragging"); };
     list.addEventListener("pointerup", release);
     list.addEventListener("pointercancel", release);
+    /* Links and images never start the browser's own drag, even if the CMS drops their draggable="false" */
+    list.addEventListener("dragstart", (e) => e.preventDefault());
     list.addEventListener("click", (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
     update();
-  });
+  };
+  let queued = false;
+  const scan = () => { queued = false; document.querySelectorAll(".hn-vcn").forEach(init); };
+  window.hnVcnInit = scan;
+  scan();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);
+  window.addEventListener("load", scan);
+  if ("MutationObserver" in window) new MutationObserver(() => { if (!queued) { queued = true; requestAnimationFrame(scan); } }).observe(document.documentElement, { childList: true, subtree: true });
 })();
 </script>
