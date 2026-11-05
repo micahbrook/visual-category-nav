@@ -166,8 +166,10 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
 /* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
 .hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
 .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
-.hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-gutter); }
-.hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-gutter); }
+/* Arrows flush to the rail's edges, as in Lawrence's frame (Templates 1.0, node 26738:39271): they cover the gutter and at most the
+   outer edge of the end tile's tint, never its image */
+.hn-vcn--full .hn-vcn__arrow--prev { left: 0; }
+.hn-vcn--full .hn-vcn__arrow--next { right: 0; }
 /* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
 .hn-vcn--container .hn-vcn__frame { max-width: 1440px; margin-inline: auto; padding-inline: var(--hn-vcn-gutter); }
 /* The list reaches 4px past the content edge only so a focused end tile's ring isn't cut off; the tiles still start on the edge */
@@ -294,13 +296,19 @@ body{margin:0;background:var(--ui-ground);color:var(--ui-ink);font:400 15px/1.5 
       prev.hidden = atStart;
       next.hidden = atEnd;
     };
-    // An arrow moves the rail by every whole tile in view but one, so one tile stays for context.
+    // An arrow pages by every whole tile in view but one, so one tile stays for context. The stops are fixed (the start, one page,
+    // two pages … then the end) and each is a tile edge, so the rail always lands on a whole tile and Back retraces Next exactly.
     let startX = 0, startLeft = 0, down = false, dragged = false;
     const page = (dir) => {
-      const item = list.querySelector(".hn-vcn__item");
-      const step = item.offsetWidth + (parseFloat(getComputedStyle(list).columnGap) || 0);
-      const tiles = Math.max(1, Math.floor(list.clientWidth / step) - 1);
-      list.scrollBy({ left: dir * tiles * step, behavior: reduce.matches ? "auto" : "smooth" });
+      const cs = getComputedStyle(list), item = list.querySelector(".hn-vcn__item");
+      const gap = parseFloat(cs.columnGap) || 0, step = item.offsetWidth + gap;
+      const view = list.clientWidth - (parseFloat(cs.scrollPaddingLeft) || 0) - (parseFloat(cs.scrollPaddingRight) || 0);
+      const by = Math.max(1, Math.floor((view + gap) / step) - 1) * step;
+      const max = list.scrollWidth - list.clientWidth, at = list.scrollLeft, stops = [];
+      for (let x = 0; x < max - 1; x += by) stops.push(x);
+      stops.push(max);
+      const to = dir > 0 ? stops.find((x) => x > at + 1) : stops.reverse().find((x) => x < at - 1);
+      if (to !== undefined) list.scrollTo({ left: to, behavior: reduce.matches ? "auto" : "smooth" });
     };
     // Fullstory: named events for tiles, arrows and the first scroll, sent only when Fullstory is on the page
     // (Browser API v2, FS("trackEvent"), or v1's FS.event). Fullstory also records the clicks themselves; the
