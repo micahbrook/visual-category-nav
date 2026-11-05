@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* The block sets its own box model, so it renders the same whatever the page's CSS does */
 .hn-vcn, .hn-vcn *, .hn-vcn *::before, .hn-vcn *::after { box-sizing: border-box; }
 /* Component sizes from Figma: phone tiles 88, Square/Icons 112 (72px icon), Square/Images 134 (110px image) */
-.hn-vcn__frame { --hn-vcn-gutter: var(--spacing-sm); --hn-vcn-tile: 88px; --hn-vcn-arrow-top: 45px; }
+.hn-vcn__frame { --hn-vcn-gutter: var(--spacing-sm); --hn-vcn-tile: 88px; --hn-vcn-arrow-top: 45px; --hn-vcn-arrow-inset: var(--spacing-2xs); }
 .hn-vcn .hn-vcn__viewport { position: relative; }
 .hn-vcn .hn-vcn__list {
   display: flex; gap: var(--spacing-xs);
@@ -221,10 +221,10 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
 .hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
 .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
-/* Arrows flush to the rail's edges, as in Lawrence's frame (Templates 1.0, node 26738:39271): they cover the gutter and at most the
-   outer edge of the end tile's tint, never its image */
-.hn-vcn--full .hn-vcn__arrow--prev { left: 0; }
-.hn-vcn--full .hn-vcn__arrow--next { right: 0; }
+/* Arrows sit just inside the rail's edges (8px, then 12px from 1024): off the screen edge, over the gutter and the outer edge of
+   the end tile's tint, clear of its image */
+.hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-arrow-inset); }
+.hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-arrow-inset); }
 /* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
 .hn-vcn--container .hn-vcn__frame { max-width: 1440px; margin-inline: auto; padding-inline: var(--hn-vcn-gutter); }
 /* The list reaches 4px past the content edge only so a focused end tile's ring isn't cut off; the tiles still start on the edge */
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); }
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xs); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
@@ -416,7 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* The block sets its own box model, so it renders the same whatever the page's CSS does */
 .hn-vcn, .hn-vcn *, .hn-vcn *::before, .hn-vcn *::after { box-sizing: border-box; }
 /* Component sizes from Figma: phone tiles 88, Square/Icons 112 (72px icon), Square/Images 134 (110px image) */
-.hn-vcn__frame { --hn-vcn-gutter: var(--spacing-sm); --hn-vcn-tile: 88px; --hn-vcn-arrow-top: 45px; }
+.hn-vcn__frame { --hn-vcn-gutter: var(--spacing-sm); --hn-vcn-tile: 88px; --hn-vcn-arrow-top: 45px; --hn-vcn-arrow-inset: var(--spacing-2xs); }
 .hn-vcn .hn-vcn__viewport { position: relative; }
 .hn-vcn .hn-vcn__list {
   display: flex; gap: var(--spacing-xs);
@@ -513,10 +513,10 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
 .hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
 .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
-/* Arrows flush to the rail's edges, as in Lawrence's frame (Templates 1.0, node 26738:39271): they cover the gutter and at most the
-   outer edge of the end tile's tint, never its image */
-.hn-vcn--full .hn-vcn__arrow--prev { left: 0; }
-.hn-vcn--full .hn-vcn__arrow--next { right: 0; }
+/* Arrows sit just inside the rail's edges (8px, then 12px from 1024): off the screen edge, over the gutter and the outer edge of
+   the end tile's tint, clear of its image */
+.hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-arrow-inset); }
+.hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-arrow-inset); }
 /* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
 .hn-vcn--container .hn-vcn__frame { max-width: 1440px; margin-inline: auto; padding-inline: var(--hn-vcn-gutter); }
 /* The list reaches 4px past the content edge only so a focused end tile's ring isn't cut off; the tiles still start on the edge */
@@ -558,7 +558,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); }
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xs); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
@@ -731,7 +731,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* The block sets its own box model, so it renders the same whatever the page&#x27;s CSS does */
 .hn-vcn, .hn-vcn *, .hn-vcn *::before, .hn-vcn *::after { box-sizing: border-box; }
 /* Component sizes from Figma: phone tiles 88, Square/Icons 112 (72px icon), Square/Images 134 (110px image) */
-.hn-vcn__frame { --hn-vcn-gutter: var(--spacing-sm); --hn-vcn-tile: 88px; --hn-vcn-arrow-top: 45px; }
+.hn-vcn__frame { --hn-vcn-gutter: var(--spacing-sm); --hn-vcn-tile: 88px; --hn-vcn-arrow-top: 45px; --hn-vcn-arrow-inset: var(--spacing-2xs); }
 .hn-vcn .hn-vcn__viewport { position: relative; }
 .hn-vcn .hn-vcn__list {
   display: flex; gap: var(--spacing-xs);
@@ -828,10 +828,10 @@ document.addEventListener("DOMContentLoaded", () => {
 /* Full width of the lead space: the rail spans what .hn-slider spans and scrolls to the screen edge */
 .hn-vcn--full .hn-vcn__frame { max-width: 1920px; margin-inline: auto; }
 .hn-vcn--full .hn-vcn__list { padding-inline: var(--hn-vcn-gutter); scroll-padding-inline: var(--hn-vcn-gutter); }
-/* Arrows flush to the rail&#x27;s edges, as in Lawrence&#x27;s frame (Templates 1.0, node 26738:39271): they cover the gutter and at most the
-   outer edge of the end tile&#x27;s tint, never its image */
-.hn-vcn--full .hn-vcn__arrow--prev { left: 0; }
-.hn-vcn--full .hn-vcn__arrow--next { right: 0; }
+/* Arrows sit just inside the rail&#x27;s edges (8px, then 12px from 1024): off the screen edge, over the gutter and the outer edge of
+   the end tile&#x27;s tint, clear of its image */
+.hn-vcn--full .hn-vcn__arrow--prev { left: var(--hn-vcn-arrow-inset); }
+.hn-vcn--full .hn-vcn__arrow--next { right: var(--hn-vcn-arrow-inset); }
 /* Page container: the same box as .container--adaptive-padding--small below it, clipped at its content edge */
 .hn-vcn--container .hn-vcn__frame { max-width: 1440px; margin-inline: auto; padding-inline: var(--hn-vcn-gutter); }
 /* The list reaches 4px past the content edge only so a focused end tile&#x27;s ring isn&#x27;t cut off; the tiles still start on the edge */
@@ -873,7 +873,7 @@ document.addEventListener("DOMContentLoaded", () => {
   .hn-vcn .hn-vcn__media { border: var(--border-sm) solid CanvasText; }
 }
 @container (min-width: 1024px) {
-  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); }
+  .hn-vcn__frame { --hn-vcn-gutter: var(--spacing-xl); --hn-vcn-arrow-inset: var(--spacing-xs); }
   .hn-vcn .hn-vcn__arrow { display: inline-flex; }
   .hn-vcn .hn-vcn__arrow[hidden] { display: none; }
 }
